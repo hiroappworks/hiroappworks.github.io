@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg"
+     viewBox="0 0 811 833"
+     role="img"
+     aria-labelledby="title desc"
+     preserveAspectRatio="xMidYMid meet">
+  <title id="title">Hiro App Works H mark</title>
+  <desc id="desc">Transparent vector H monogram in white and cyan for dark backgrounds.</desc>
+  <defs>
+    <linearGradient id="navyGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#FFFFFF"/><stop offset="100%" stop-color="#FFFFFF"/></linearGradient>
+    <linearGradient id="cyanGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#12D8E8"/><stop offset="100%" stop-color="#00A8B8"/></linearGradient>
+  </defs>
+
+  <path d="M 78 59 L 59 78 L 51 88 L 34 116 L 27 133 L 22 150 L 18 182 L 18 399 L 19 400 L 18 403 L 18 647 L 19 648 L 19 661 L 25 690 L 34 713 L 45 733 L 61 754 L 83 775 L 111 794 L 133 804 L 157 811 L 180 814 L 308 814 L 308 475 L 310 473 L 503 473 L 504 474 L 505 500 L 594 627 L 594 205 L 505 205 L 504 207 L 504 384 L 503 385 L 309 385 L 308 384 L 308 205 L 217 205 L 217 716 L 216 717 L 177 717 L 163 714 L 144 705 L 126 688 L 116 672 L 111 658 L 109 646 L 109 183 L 113 164 L 121 147 L 126 140 L 139 127 L 151 119 L 166 113 L 182 110 L 629 110 L 651 115 L 665 122 L 674 129 L 686 142 L 694 155 L 701 179 L 701 650 L 697 666 L 686 686 L 669 703 L 650 714 L 703 791 L 717 783 L 737 767 L 758 744 L 775 717 L 787 685 L 790 671 L 792 651 L 792 174 L 788 148 L 778 119 L 768 100 L 752 78 L 733 59 L 708 41 L 688 31 L 672 25 L 651 20 L 634 18 L 178 18 L 151 22 L 121 32 L 100 43 Z" fill="url(#navyGrad)" fill-rule="evenodd"/>
+  <path d="M 334 513 L 537 814 L 670 814 L 465 513 L 443 513 L 442 512 L 435 513 Z" fill="url(#cyanGrad)" fill-rule="evenodd"/>
+</svg>
