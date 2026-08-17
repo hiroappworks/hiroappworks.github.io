@@ -1,10 +1,12 @@
 # Hiro App Works Web
 
-Hiro App Worksのブランドトップページ、共通サポート、共通プライバシーポリシーを管理するWeb専用リポジトリです。アプリ本体のコード、秘密情報、ユーザーデータは含めません。
+Hiro App Worksのブランドトップページ、共通サポート、共通プライバシーポリシーを管理する、依存関係のない静的Webサイトです。アプリ本体のコード、秘密情報、ユーザーデータは含めません。
 
 ## 現在の状態
 
-2026-08-18時点では、公開中のSupport / Privacyは従来の独立リポジトリから配信されています。このローカルリポジトリへのコピーは完了していますが、公開元の切替はまだ行っていません。
+2026-08-18時点で、ブランドトップはローカル実装・ブラウザ確認まで完了しています。GitHubへのpush、Pages公開元の切替、旧リポジトリの停止・削除はまだ行っていません。
+
+公開中のSupport / Privacyは、引き続き従来の独立リポジトリから配信されています。
 
 | ページ | 公開URL | 現在の公開リポジトリ | ソース |
 | --- | --- | --- | --- |
@@ -17,40 +19,63 @@ Hiro App Worksのブランドトップページ、共通サポート、共通プ
 
 ```text
 .
+├── index.html
+├── styles.css
+├── script.js
+├── site-config.js
+├── favicon.ico
+├── favicon-32x32.png
+├── apple-touch-icon.png
+├── assets/
+│   ├── brand/
+│   │   └── hiro-app-works-mark.svg
+│   └── apps/
+│       └── consignment-note/
+│           ├── README.md
+│           ├── app-icon.webp
+│           └── screens/
 ├── support/
-│   ├── index.html
-│   ├── styles.css
-│   └── assets/
-│       └── hiro-app-works-mark.svg
 ├── privacy/
-│   ├── index.html
-│   ├── styles.css
-│   └── assets/
-│       └── hiro-app-works-mark.svg
 ├── docs/
 │   └── MIGRATION.md
 ├── .gitignore
 └── .nojekyll
 ```
 
-ルートの `index.html` は、ブランドトップページ制作時に追加します。
-
 ## ローカル確認
 
-依存関係やビルド処理はありません。リポジトリルートで次を実行します。
+ビルド処理はありません。リポジトリルートで次を実行します。
 
 ```bash
 python3 -m http.server 4173 --bind 127.0.0.1
 ```
 
+- Brand: http://127.0.0.1:4173/
 - Support: http://127.0.0.1:4173/support/
 - Privacy: http://127.0.0.1:4173/privacy/
 
+## App Store URL
+
+正式URLが確定するまでは、トップページのボタンを「App Store 公開準備中」として無効化しています。URLを推測していません。
+
+公開後は `site-config.js` の `appStoreUrl` だけを変更します。値が `https://apps.apple.com/` で始まる場合にのみ、JavaScriptがボタンを有効化して「App Storeで見る」へ切り替えます。
+
+## アプリ追加
+
+現在のアプリ行は `index.html` の `data-app="consignment-note"` を持つ `article.app-row` です。2作目以降はこの単位で行を追加し、各アプリの素材を `assets/apps/<app-name>/` に分離します。
+
+## 素材
+
+委託販売ノートのアプリアイコンと画面画像は、SalesLocationLedger内の正式なネイティブアイコンおよびApp Store最終候補から、元ファイルを変更せずWebP派生画像としてコピーしています。出典と変換内容は `assets/apps/consignment-note/README.md` に記録しています。
+
+Hiro App WorksのfaviconとApple Touch Iconは、既存の正式な `hiro-app-works-mark.svg` を変更せず、濃紺背景上へ配置した派生画像です。
+
+正式なOGP画像と委託販売ノートのApp Store URLは未確定です。架空素材や推測URLは追加していません。
+
 ## 公開方針
 
-将来のブランドトップページを `https://hiroappworks.github.io/` で公開するには、GitHubユーザーサイト用の `hiroappworks/hiroappworks.github.io` リポジトリが必要です。2026-08-18の調査時点では、このリポジトリは存在しません。
+ブランドトップを `https://hiroappworks.github.io/` で公開するには、GitHubユーザーサイト用の `hiroappworks/hiroappworks.github.io` リポジトリが必要です。2026-08-18の調査時点では、このリポジトリは存在しません。
 
 このローカルリポジトリの `origin` は、ユーザーサイト用リポジトリを作成して公開方式を確定するまで設定しません。既存の `hiroappworks/support` または `hiroappworks/privacy` を、この統合リポジトリの `origin` に設定しないでください。
 
 公開切替の手順と確認済み情報は [docs/MIGRATION.md](docs/MIGRATION.md) に記録しています。
-

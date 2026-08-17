@@ -53,15 +53,14 @@
 
 ## 公開切替前に必要な作業
 
-1. ルートのブランドページを完成させる。
-2. `hiroappworks/hiroappworks.github.io` リポジトリを新規作成する（同名リポジトリが存在しないことは2026-08-18に確認済み）。
-3. このWeb専用リポジトリを新しいremoteへ接続する。
-4. GitHub Pagesの公開元を確定し、ルート、`/support/`、`/privacy/` を実際に確認する。
-5. 既存の `hiroappworks/support` と `hiroappworks/privacy` が同じパスを公開している状態でのルーティングを確認する。
-6. HTML、CSS、SVG、Contact、モバイル表示、直接URLアクセスを回帰確認する。
-7. 公開切替とロールバック手順が確認できてから、旧リポジトリのPages停止・アーカイブ・削除を別途判断する。
+1. [完了] ルートのブランドページをローカルで完成・回帰確認する。
+2. [未実施] `hiroappworks/hiroappworks.github.io` リポジトリを新規作成する（同名リポジトリが存在しないことは2026-08-18に確認済み）。
+3. [未実施] このWeb専用リポジトリを新しいremoteへ接続する。
+4. [未実施] GitHub Pagesの公開元を確定し、ルート、`/support/`、`/privacy/` を実際に確認する。
+5. [未実施] 既存の `hiroappworks/support` と `hiroappworks/privacy` が同じパスを公開している状態でのルーティングを確認する。
+6. [未実施] 本番URLでHTML、CSS、SVG、Contact、モバイル表示、直接URLアクセスを回帰確認する。
+7. [未実施] 公開切替とロールバック手順が確認できてから、旧リポジトリのPages停止・アーカイブ・削除を別途判断する。
 
 ## ロールバック方針
 
 公開切替が完了するまでは、既存の公開リポジトリとSalesLocationLedger内の元フォルダをそのまま残します。新しい公開に問題がある場合は、既存のSupport / Privacyリポジトリを変更せずに稼働継続できる状態を維持します。
-
