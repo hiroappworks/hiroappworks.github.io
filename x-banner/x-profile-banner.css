@@ -1,0 +1,232 @@
+:root {
+  --ink: #0a1930;
+  --ink-soft: #48566a;
+  --navy: #071b3a;
+  --paper: #fbfaf8;
+  --coral: #a64f45;
+  --cyan: #00788a;
+  --shadow-phone: 0 32px 70px rgba(24, 31, 41, 0.17), 0 8px 24px rgba(24, 31, 41, 0.1);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 1500px;
+  height: 500px;
+  margin: 0;
+  overflow: hidden;
+  background: var(--paper);
+}
+
+body {
+  color: var(--ink);
+  font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", "YuGothic", Meiryo, sans-serif;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+img,
+svg {
+  display: block;
+}
+
+.x-banner {
+  position: relative;
+  width: 1500px;
+  height: 500px;
+  overflow: hidden;
+  background: var(--paper);
+}
+
+.x-header {
+  position: absolute;
+  top: 42px;
+  left: 184px;
+  z-index: 5;
+  display: inline-flex;
+  align-items: center;
+  gap: 11px;
+  color: var(--ink);
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  white-space: nowrap;
+}
+
+.brand-mark-shell {
+  display: grid;
+  width: 40px;
+  height: 40px;
+  flex: 0 0 auto;
+  place-items: center;
+  border-radius: 10px;
+  background: var(--navy);
+}
+
+.brand-mark-shell img {
+  width: 26px;
+  height: auto;
+}
+
+.x-hero-copy {
+  position: absolute;
+  top: 144px;
+  left: 184px;
+  z-index: 3;
+  width: 690px;
+}
+
+.x-brand-label {
+  margin: 0 0 17px;
+  color: var(--coral);
+  font-size: 17px;
+  font-weight: 800;
+  letter-spacing: 0.11em;
+  line-height: 1.2;
+}
+
+.x-hero-copy h1 {
+  margin: 0 0 28px;
+  color: var(--ink);
+  font-size: 64px;
+  font-weight: 760;
+  letter-spacing: -0.072em;
+  line-height: 1.12;
+  white-space: nowrap;
+}
+
+.x-hero-copy h1 span,
+.x-description span {
+  display: block;
+}
+
+.x-description {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 21px;
+  font-weight: 520;
+  letter-spacing: -0.02em;
+  line-height: 1.78;
+  white-space: nowrap;
+}
+
+.x-product {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.x-product-label {
+  position: absolute;
+  top: 38px;
+  left: 856px;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  gap: 13px;
+}
+
+.x-product-label img {
+  width: 54px;
+  height: 54px;
+  border-radius: 13px;
+  box-shadow: 0 8px 20px rgba(86, 53, 45, 0.14);
+}
+
+.x-product-label span,
+.x-product-label strong {
+  display: block;
+}
+
+.x-product-label span {
+  margin-bottom: 3px;
+  color: var(--coral);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+  line-height: 1.2;
+}
+
+.x-product-label strong {
+  color: var(--ink);
+  font-size: 19px;
+  font-weight: 760;
+  letter-spacing: -0.025em;
+  line-height: 1.25;
+  white-space: nowrap;
+}
+
+.phone-stage {
+  position: absolute;
+  inset: 0;
+}
+
+/* Root Phase 3.3 geometry: width plus the canonical aspect-ratio determines height. */
+.app-preview-frame {
+  position: absolute;
+  top: 22px;
+  right: 152px;
+  z-index: 2;
+  width: 240px;
+  aspect-ratio: 660 / 1434;
+  padding: 7px;
+  border: 2px solid #3a3d42;
+  border-radius: 48px;
+  background: #111317;
+  box-shadow: var(--shadow-phone);
+}
+
+.app-preview-screen {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 40px;
+  background: #fffaf7;
+}
+
+.app-preview-screen img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.phone-orbit {
+  position: absolute;
+  z-index: 1;
+  border: 1px solid rgba(189, 98, 85, 0.2);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.phone-orbit-one {
+  top: 46px;
+  right: 78px;
+  width: 390px;
+  height: 390px;
+}
+
+.phone-orbit-two {
+  top: 128px;
+  right: 142px;
+  width: 288px;
+  height: 288px;
+  border-color: rgba(0, 151, 170, 0.18);
+  transform: translate(20%, -8%);
+}
+
+.x-banner::after {
+  position: absolute;
+  right: 22px;
+  bottom: 25px;
+  width: 360px;
+  height: 1px;
+  background: rgba(0, 120, 138, 0.3);
+  content: "";
+  opacity: 0.7;
+}
