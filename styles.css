@@ -248,6 +248,13 @@ h3 {
   display: block;
 }
 
+.hero-copy h1 .jp-keep,
+.hero-description .jp-keep,
+.story-step h3 .jp-keep,
+.story-supporting-copy .jp-keep {
+  display: inline;
+}
+
 .hero-description {
   max-width: 700px;
   margin-bottom: 0;
@@ -1023,6 +1030,13 @@ h3 {
     line-height: 1.85;
   }
 
+  .hero-copy h1 .jp-keep,
+  .hero-description .jp-keep,
+  .story-step h3 .jp-keep,
+  .story-supporting-copy .jp-keep {
+    white-space: nowrap;
+  }
+
   .hero-route {
     right: -22vw;
     bottom: 72px;
@@ -1229,7 +1243,11 @@ h3 {
     display: inline;
   }
 
-  .hero-description span + span::before {
+  .hero-description > span {
+    display: block;
+  }
+
+  .hero-description > span + span::before {
     content: " ";
   }
 
@@ -1237,7 +1255,13 @@ h3 {
     display: inline;
   }
 
-  .story-supporting-copy span + span::before {
+  [data-story-step="1"] .story-supporting-copy > span,
+  [data-story-step="2"] .story-supporting-copy > span,
+  [data-story-step="3"] .story-supporting-copy > span {
+    display: block;
+  }
+
+  .story-supporting-copy > span + span::before {
     content: " ";
   }
 
