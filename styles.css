@@ -486,10 +486,10 @@ h3 {
   z-index: 2;
   width: clamp(236px, 34svh, 344px);
   aspect-ratio: 660 / 1434;
-  padding: 4px;
-  border: 1px solid rgba(10, 25, 48, 0.13);
-  border-radius: clamp(20px, 2.55svh, 30px);
-  background: rgba(255, 255, 255, 0.82);
+  padding: 3px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: clamp(12px, 1.55svh, 19px);
+  background: rgba(10, 25, 48, 0.82);
   box-shadow: var(--shadow-phone);
 }
 
@@ -498,7 +498,7 @@ h3 {
   width: 100%;
   height: 100%;
   overflow: hidden;
-  border-radius: clamp(14px, 1.75svh, 20px);
+  border-radius: clamp(9px, 1.2svh, 15px);
   background: #fffaf7;
 }
 
@@ -1063,13 +1063,13 @@ h3 {
 
   .app-preview-frame {
     width: clamp(156px, 23svh, 214px);
-    padding: 3px;
-    border-radius: clamp(14px, 1.9svh, 21px);
+    padding: 2px;
+    border-radius: clamp(10px, 1.45svh, 16px);
     box-shadow: 0 18px 38px rgba(24, 31, 41, 0.12), 0 4px 12px rgba(24, 31, 41, 0.065);
   }
 
   .app-preview-screen {
-    border-radius: clamp(10px, 1.3svh, 15px);
+    border-radius: clamp(7px, 1.1svh, 12px);
   }
 
   .phone-orbit-one {
