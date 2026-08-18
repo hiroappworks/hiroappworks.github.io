@@ -20,7 +20,7 @@
   --header-height: 68px;
   --content-width: 1240px;
   --page-gutter: clamp(20px, 4vw, 64px);
-  --shadow-phone: 0 32px 70px rgba(24, 31, 41, 0.17), 0 8px 24px rgba(24, 31, 41, 0.1);
+  --shadow-phone: 0 26px 58px rgba(24, 31, 41, 0.13), 0 6px 18px rgba(24, 31, 41, 0.07);
 }
 
 *,
@@ -486,10 +486,10 @@ h3 {
   z-index: 2;
   width: clamp(236px, 34svh, 344px);
   aspect-ratio: 660 / 1434;
-  padding: 7px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: clamp(18px, 2.4svh, 28px);
-  background: #111317;
+  padding: 4px;
+  border: 1px solid rgba(10, 25, 48, 0.13);
+  border-radius: clamp(20px, 2.55svh, 30px);
+  background: rgba(255, 255, 255, 0.82);
   box-shadow: var(--shadow-phone);
 }
 
@@ -498,7 +498,7 @@ h3 {
   width: 100%;
   height: 100%;
   overflow: hidden;
-  border-radius: clamp(12px, 1.65svh, 19px);
+  border-radius: clamp(14px, 1.75svh, 20px);
   background: #fffaf7;
 }
 
@@ -1063,13 +1063,13 @@ h3 {
 
   .app-preview-frame {
     width: clamp(156px, 23svh, 214px);
-    padding: 5px;
-    border-radius: clamp(13px, 1.8svh, 20px);
-    box-shadow: 0 20px 42px rgba(24, 31, 41, 0.16), 0 5px 15px rgba(24, 31, 41, 0.09);
+    padding: 3px;
+    border-radius: clamp(14px, 1.9svh, 21px);
+    box-shadow: 0 18px 38px rgba(24, 31, 41, 0.12), 0 4px 12px rgba(24, 31, 41, 0.065);
   }
 
   .app-preview-screen {
-    border-radius: clamp(9px, 1.25svh, 14px);
+    border-radius: clamp(10px, 1.3svh, 15px);
   }
 
   .phone-orbit-one {
