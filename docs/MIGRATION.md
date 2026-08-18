@@ -64,3 +64,21 @@
 ## ロールバック方針
 
 公開切替が完了するまでは、既存の公開リポジトリとSalesLocationLedger内の元フォルダをそのまま残します。新しい公開に問題がある場合は、既存のSupport / Privacyリポジトリを変更せずに稼働継続できる状態を維持します。
+
+## GitHub Pages一本化の実施記録
+
+実施日: 2026-08-18
+
+- Hiro App Works Webの正本を `hiroappworks/hiroappworks.github.io` に一本化した。
+- Root: `https://hiroappworks.github.io/`
+- Support: `https://hiroappworks.github.io/support/`
+- Privacy: `https://hiroappworks.github.io/privacy/`
+- 旧Project Pagesである `hiroappworks/support` と `hiroappworks/privacy` のGitHub Pages公開を停止した。
+- Supportは旧Pages停止後、約5分でユーザーサイト側の新Supportへ切り替わった。
+- Privacyは旧Pages停止後、約5〜6分でユーザーサイト側の新Privacyへ切り替わった。
+- 切替確認中、確認した範囲では公開URLはHTTP 200を維持し、404/5xxによる停止は発生しなかった。
+- 旧2リポジトリ自体は削除していない。
+- 旧2リポジトリはPublic、`main` branch、Git履歴、ファイルをそのまま保持している。
+- 旧2リポジトリはロールバック用バックアップとして保持している。
+- 現在の唯一のWeb正本は `/Users/hiroaki/Documents/Hiro App Works Web` および `hiroappworks/hiroappworks.github.io` である。
+- 今後のRoot / Support / Privacyの更新は、このWeb repositoryだけを編集・commit・pushすればよい。
