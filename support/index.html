@@ -4,34 +4,43 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Hiro App Worksの公式サポートページ。アプリの使い方、不具合、購入・復元に関するお問い合わせをご案内します。">
-    <meta name="theme-color" content="#071b3a">
+    <meta name="theme-color" content="#fbfaf8">
+    <meta name="color-scheme" content="light">
     <title>サポート | Hiro App Works</title>
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="stylesheet" href="/utility-pages.css">
     <link rel="stylesheet" href="styles.css">
   </head>
   <body>
     <a class="skip-link" href="#main-content">本文へ移動</a>
 
     <header class="site-header">
-      <div class="hero-pattern hero-pattern-left" aria-hidden="true"></div>
-      <div class="hero-pattern hero-pattern-right" aria-hidden="true"></div>
-      <div class="header-inner">
-        <nav class="site-nav" aria-label="ページ内メニュー">
-          <a class="wordmark" href="./">
-            <img class="wordmark-mark" src="assets/hiro-app-works-mark.svg" alt="">
-            <span>Hiro App Works</span>
-          </a>
-          <div class="nav-links">
-            <a href="#contact">お問い合わせ</a>
-            <a href="#faq">よくある質問</a>
-            <a href="#apps">対応アプリ</a>
-          </div>
+      <div class="site-header-inner">
+        <a class="brand-link" href="/" aria-label="Hiro App Works ホームへ">
+          <span class="brand-mark-shell" aria-hidden="true">
+            <img src="assets/hiro-app-works-mark.svg" alt="" width="26" height="27">
+          </span>
+          <span>Hiro App Works</span>
+        </a>
+        <nav class="site-nav" aria-label="メインメニュー">
+          <a href="/">Home</a>
+          <a href="/support/" aria-current="page">Support</a>
+          <a href="/privacy/">Privacy</a>
+          <a href="https://forms.gle/Jt4DjdAAtz8oBd1y9" target="_blank" rel="noopener noreferrer">Contact</a>
         </nav>
+      </div>
+    </header>
 
-        <div class="hero-layout">
+    <main id="main-content">
+      <section class="page-hero support-hero" aria-labelledby="support-title">
+        <div class="page-hero-inner">
+          <div class="hero-layout">
           <div class="hero-copy">
-            <p class="hero-label">OFFICIAL SUPPORT</p>
-            <h1>サポート</h1>
-            <p class="hero-description">アプリの使い方や不具合、購入に関するお問い合わせはこちら。</p>
+            <p class="page-hero-label">OFFICIAL SUPPORT</p>
+            <h1 id="support-title">サポート</h1>
+            <p class="page-hero-description">アプリの使い方や不具合、購入に関するお問い合わせはこちら。</p>
             <a class="button button-coral" href="https://forms.gle/Jt4DjdAAtz8oBd1y9" target="_blank" rel="noopener noreferrer" aria-describedby="form-note">
               <span>お問い合わせフォームを開く</span>
               <svg class="button-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -55,10 +64,15 @@
             </svg>
           </div>
         </div>
+          <nav class="page-index" aria-label="サポートページ内メニュー">
+            <a href="#contact">お問い合わせ</a>
+            <a href="#faq">よくある質問</a>
+            <a href="#apps">対応アプリ</a>
+          </nav>
       </div>
-    </header>
+      </section>
 
-    <main id="main-content" class="page-shell">
+      <div class="page-shell">
       <section id="contact" class="content-section contact-section" aria-labelledby="contact-title">
         <div class="section-heading">
           <p class="section-kicker">Need help?</p>
@@ -184,16 +198,28 @@
           </div>
         </div>
       </section>
+      </div>
     </main>
 
     <footer class="site-footer">
       <div class="footer-inner">
-        <p>© Hiro App Works</p>
-        <nav aria-label="フッターメニュー">
-          <a href="#contact">お問い合わせ</a>
-          <a href="mailto:hiro.appworks@gmail.com">hiro.appworks@gmail.com</a>
-          <a href="https://hiroappworks.github.io/privacy/" target="_blank" rel="noopener noreferrer">プライバシーポリシー</a>
+        <div class="footer-brand">
+          <img src="assets/hiro-app-works-mark.svg" alt="" width="46" height="47">
+          <div>
+            <strong>Hiro App Works</strong>
+            <span>Small apps, carefully made.</span>
+          </div>
+        </div>
+        <nav class="footer-nav" aria-label="フッターメニュー">
+          <a href="/#apps">Apps</a>
+          <a href="/support/">Support</a>
+          <a href="/privacy/">Privacy Policy</a>
+          <a href="https://forms.gle/Jt4DjdAAtz8oBd1y9" target="_blank" rel="noopener noreferrer">Contact</a>
         </nav>
+      </div>
+      <div class="footer-meta">
+        <p>© 2026 Hiro App Works</p>
+        <a href="mailto:hiro.appworks@gmail.com">hiro.appworks@gmail.com</a>
       </div>
     </footer>
   </body>

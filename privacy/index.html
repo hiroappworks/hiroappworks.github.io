@@ -4,35 +4,43 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Hiro App Works共通サポートおよびお問い合わせ窓口における情報の取扱いについて説明します。">
-    <meta name="theme-color" content="#071b3a">
+    <meta name="theme-color" content="#fbfaf8">
+    <meta name="color-scheme" content="light">
     <title>Hiro App Works プライバシーポリシー</title>
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="stylesheet" href="/utility-pages.css">
     <link rel="stylesheet" href="styles.css">
   </head>
   <body>
     <a class="skip-link" href="#main-content">本文へ移動</a>
 
     <header class="site-header">
-      <div class="header-pattern header-pattern-left" aria-hidden="true"></div>
-      <div class="header-pattern header-pattern-right" aria-hidden="true"></div>
-      <div class="header-inner">
-        <nav class="site-nav" aria-label="ページ内メニュー">
-          <a class="wordmark" href="https://hiroappworks.github.io/support/">
-            <img class="wordmark-mark" src="assets/hiro-app-works-mark.svg" alt="">
-            <span>Hiro App Works</span>
-          </a>
-          <div class="nav-links">
-            <a href="https://hiroappworks.github.io/support/">サポートへ戻る</a>
-            <a href="mailto:hiro.appworks@gmail.com">お問い合わせ</a>
-          </div>
+      <div class="site-header-inner">
+        <a class="brand-link" href="/" aria-label="Hiro App Works ホームへ">
+          <span class="brand-mark-shell" aria-hidden="true">
+            <img src="assets/hiro-app-works-mark.svg" alt="" width="26" height="27">
+          </span>
+          <span>Hiro App Works</span>
+        </a>
+        <nav class="site-nav" aria-label="メインメニュー">
+          <a href="/">Home</a>
+          <a href="/support/">Support</a>
+          <a href="/privacy/" aria-current="page">Privacy</a>
+          <a href="https://forms.gle/Jt4DjdAAtz8oBd1y9" target="_blank" rel="noopener noreferrer">Contact</a>
         </nav>
-
-        <div class="title-block">
-          <h1>Hiro App Works プライバシーポリシー</h1>
-        </div>
       </div>
     </header>
 
-    <main id="main-content" class="page-shell">
+    <main id="main-content">
+      <section class="page-hero privacy-hero" aria-labelledby="privacy-title">
+        <div class="page-hero-inner">
+          <h1 id="privacy-title"><span class="title-brand">Hiro App Works</span> <span class="title-policy"><span>プライバシー</span><wbr><span>ポリシー</span></span></h1>
+        </div>
+      </section>
+
+      <div class="page-shell">
       <article class="policy-article">
         <p class="lead">このページは、Hiro App Works共通サポートおよびお問い合わせ窓口における情報の取扱いについて説明するものです。</p>
         <p>対象は、共通サポートページ、Googleフォームによるお問い合わせ、メールによるお問い合わせです。委託販売ノート等、各アプリ本体のデータ取扱いについては、各アプリ固有のプライバシーポリシーをご確認ください。</p>
@@ -132,15 +140,28 @@
           <a class="email-link" href="mailto:hiro.appworks@gmail.com">hiro.appworks@gmail.com</a>
         </section>
       </article>
+      </div>
     </main>
 
     <footer class="site-footer">
       <div class="footer-inner">
-        <p class="footer-brand">Hiro App Works</p>
-        <nav aria-label="フッターメニュー">
-          <a href="https://hiroappworks.github.io/support/">サポートへ戻る</a>
-          <a href="mailto:hiro.appworks@gmail.com">お問い合わせ</a>
+        <div class="footer-brand">
+          <img src="assets/hiro-app-works-mark.svg" alt="" width="46" height="47">
+          <div>
+            <strong>Hiro App Works</strong>
+            <span>Small apps, carefully made.</span>
+          </div>
+        </div>
+        <nav class="footer-nav" aria-label="フッターメニュー">
+          <a href="/#apps">Apps</a>
+          <a href="/support/">Support</a>
+          <a href="/privacy/">Privacy Policy</a>
+          <a href="https://forms.gle/Jt4DjdAAtz8oBd1y9" target="_blank" rel="noopener noreferrer">Contact</a>
         </nav>
+      </div>
+      <div class="footer-meta">
+        <p>© 2026 Hiro App Works</p>
+        <a href="mailto:hiro.appworks@gmail.com">hiro.appworks@gmail.com</a>
       </div>
     </footer>
   </body>
