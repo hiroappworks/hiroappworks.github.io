@@ -237,7 +237,8 @@ h3 {
 }
 
 .footer-inner,
-.footer-meta {
+.footer-meta,
+.apple-trademark-credit {
   width: min(100%, var(--content-width));
   margin: 0 auto;
 }
@@ -318,6 +319,13 @@ h3 {
 .footer-meta a {
   color: rgba(255, 255, 255, 0.62);
   text-underline-offset: 4px;
+}
+
+.apple-trademark-credit {
+  margin-top: 18px;
+  color: rgba(255, 255, 255, 0.56);
+  font-size: 0.72rem;
+  line-height: 1.75;
 }
 
 @media (max-width: 760px) {

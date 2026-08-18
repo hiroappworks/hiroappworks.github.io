@@ -26,14 +26,13 @@
 
   function setAppStoreLink() {
     var link = document.querySelector("[data-app-store-link]");
-    var label = document.querySelector("[data-app-store-label]");
     var config = window.HIRO_APP_WORKS_CONFIG;
     var value = config && config.apps && config.apps.consignmentNote
       ? config.apps.consignmentNote.appStoreUrl
       : "";
     var url = typeof value === "string" ? value.trim() : "";
 
-    if (!link || !label || !/^https:\/\/apps\.apple\.com\//i.test(url)) {
+    if (!link || !/^https:\/\/apps\.apple\.com\//i.test(url)) {
       return;
     }
 
@@ -42,7 +41,6 @@
     link.rel = "noopener noreferrer";
     link.classList.remove("is-disabled");
     link.removeAttribute("aria-disabled");
-    label.textContent = "App Storeで見る";
   }
 
   function activateStep(index) {
