@@ -1267,6 +1267,14 @@ h3 {
   }
 }
 
+@media (max-width: 480px) and (max-height: 720px) {
+  .hero-route {
+    right: -38vw;
+    bottom: 0;
+    width: 90vw;
+  }
+}
+
 @media (max-width: 340px) {
   :root {
     --page-gutter: 16px;
