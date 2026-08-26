@@ -32,22 +32,24 @@
   }
 
   function setAppStoreLink() {
-    var link = document.querySelector("[data-app-store-link]");
+    var links = Array.prototype.slice.call(document.querySelectorAll("[data-app-store-link]"));
     var config = window.HIRO_APP_WORKS_CONFIG;
     var value = config && config.apps && config.apps.consignmentNote
       ? config.apps.consignmentNote.appStoreUrl
       : "";
     var url = typeof value === "string" ? value.trim() : "";
 
-    if (!link || !/^https:\/\/apps\.apple\.com\//i.test(url)) {
+    if (links.length === 0 || !/^https:\/\/apps\.apple\.com\//i.test(url)) {
       return;
     }
 
-    link.href = url;
-    link.target = "_blank";
-    link.rel = "noopener noreferrer";
-    link.classList.remove("is-disabled");
-    link.removeAttribute("aria-disabled");
+    links.forEach(function (link) {
+      link.href = url;
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
+      link.classList.remove("is-disabled");
+      link.removeAttribute("aria-disabled");
+    });
   }
 
   function activateStep(index) {

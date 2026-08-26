@@ -45,7 +45,6 @@
           <span>Hiro App Works</span>
         </a>
         <nav class="site-nav" aria-label="メインメニュー">
-          <a href="#apps">Apps</a>
           <a href="/support/">Support</a>
           <a class="nav-link-secondary" href="/privacy/">Privacy</a>
           <a class="nav-link-secondary" href="https://forms.gle/Jt4DjdAAtz8oBd1y9" target="_blank" rel="noopener noreferrer">Contact</a>
@@ -54,19 +53,24 @@
     </header>
 
     <main id="main-content">
-      <section id="top" class="hero-scene" aria-labelledby="hero-title" data-hero-scene>
+      <section id="top" class="hero-scene product-hero-scene" aria-labelledby="hero-title" data-hero-scene>
         <div class="hero-sticky">
           <div class="hero-inner">
-            <div class="hero-copy" data-hero-copy>
-              <p class="hero-brand">Hiro App Works</p>
-              <h1 id="hero-title">
-                <span>日々の<span class="jp-keep">小さな</span><span class="jp-keep">面倒を、</span></span>
-                <span><span class="jp-keep">シンプルな</span><span class="jp-keep">アプリに。</span></span>
-              </h1>
-              <p class="hero-description">
-                <span>iPhoneを、もう少し便利に。</span>
-                <span><span class="jp-keep">小さな</span>課題に寄り添うアプリを<span class="jp-keep">つくっています。</span></span>
+            <div class="hero-copy product-hero-copy" data-hero-copy>
+              <div class="product-hero-heading">
+                <img class="product-hero-icon" src="/assets/apps/consignment-note/app-icon.webp" alt="委託販売ノートのアプリアイコン" width="104" height="104">
+                <div class="product-hero-heading-copy">
+                  <p class="hero-brand product-hero-kicker">App 01 / iPhoneアプリ</p>
+                  <h1 id="hero-title">委託販売ノート</h1>
+                </div>
+              </div>
+              <p class="hero-description product-hero-description">
+                <span>ハンドメイド委託販売の</span>
+                <span>在庫・売上・精算を、ひとつに。</span>
               </p>
+              <a class="app-store-link product-hero-store is-disabled" data-app-store-link aria-disabled="true" aria-label="委託販売ノートをApp Storeで表示（新しいタブ）">
+                <img class="app-store-badge" src="/assets/apple/download-on-the-app-store-ja-jp.svg" alt="App Storeでダウンロード" width="109" height="40">
+              </a>
             </div>
 
             <div class="hero-route" aria-hidden="true" data-hero-route>
@@ -183,28 +187,21 @@
         </div>
       </section>
 
-      <section id="apps" class="apps-section" aria-labelledby="apps-title">
+      <section id="app-store" class="apps-section product-cta-section" aria-labelledby="app-store-title">
         <div class="section-inner">
-          <div class="section-heading">
-            <p class="section-number">06 / Apps</p>
-            <h2 id="apps-title">Apps</h2>
-            <p>Hiro App Worksがつくる、日々の小さな課題に寄り添うアプリ。</p>
-          </div>
-
-          <div class="apps-list">
-            <article class="app-row" data-app="consignment-note">
-              <div class="app-row-icon">
-                <img src="/assets/apps/consignment-note/app-icon.webp" alt="委託販売ノートのアプリアイコン" width="512" height="512" loading="lazy">
-              </div>
-              <div class="app-row-copy">
-                <p class="app-index">App 01</p>
-                <h3>委託販売ノート</h3>
-                <p>ハンドメイド委託販売の在庫・売上・精算を、ひとつに。</p>
-                <a class="app-store-link is-disabled" data-app-store-link aria-disabled="true" aria-label="委託販売ノートをApp Storeで表示（新しいタブ）">
-                  <img class="app-store-badge" src="/assets/apple/download-on-the-app-store-ja-jp.svg" alt="App Storeでダウンロード" width="109" height="40">
-                </a>
-              </div>
-            </article>
+          <div class="product-cta-card">
+            <div class="product-cta-copy">
+              <p class="section-number">Download / App 01</p>
+              <h2 id="app-store-title">委託販売ノート</h2>
+              <p>委託販売ノートを、App Storeで。</p>
+              <a class="app-store-link product-cta-store is-disabled" data-app-store-link aria-disabled="true" aria-label="委託販売ノートをApp Storeで表示（新しいタブ）">
+                <img class="app-store-badge" src="/assets/apple/download-on-the-app-store-ja-jp.svg" alt="App Storeでダウンロード" width="109" height="40">
+              </a>
+              <a class="back-home-link" href="/">Hiro App Worksトップへ <span aria-hidden="true">→</span></a>
+            </div>
+            <div class="product-cta-icon">
+              <img src="/assets/apps/consignment-note/app-icon.webp" alt="" width="512" height="512" loading="lazy">
+            </div>
           </div>
         </div>
       </section>
@@ -220,7 +217,7 @@
           </div>
         </div>
         <nav class="footer-nav" aria-label="フッターメニュー">
-          <a href="#apps">Apps</a>
+          <a href="#app-store">App Store</a>
           <a href="/support/">Support</a>
           <a href="/privacy/">Privacy Policy</a>
           <a href="https://forms.gle/Jt4DjdAAtz8oBd1y9" target="_blank" rel="noopener noreferrer">Contact</a>
