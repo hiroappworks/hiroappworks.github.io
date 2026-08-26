@@ -267,6 +267,66 @@ h3 {
   transform: translate3d(0, var(--hero-description-y, 0px), 0);
 }
 
+.brand-home-hero {
+  position: relative;
+  overflow: hidden;
+  background: var(--paper);
+}
+
+.brand-home-hero .hero-copy {
+  opacity: var(--home-hero-opacity, 1);
+  will-change: transform, opacity;
+}
+
+.has-js [data-home-reveal] {
+  opacity: 0;
+  transform: translate3d(0, 30px, 0);
+  transition: opacity 560ms ease, transform 700ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.has-js [data-home-reveal].is-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+.has-js .home-app-row .app-row-icon,
+.has-js .home-app-row .app-row-copy {
+  opacity: 0;
+  transform: translate3d(0, 22px, 0);
+  transition: opacity 520ms ease, transform 620ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.has-js .home-apps.is-visible .home-app-row .app-row-icon {
+  opacity: 1;
+  transform: translate3d(0, var(--home-app-icon-y, 0px), 0) rotate(-0.6deg);
+  transition-delay: 80ms;
+}
+
+.has-js .home-apps.is-visible .home-app-row .app-row-copy {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+  transition-delay: 150ms;
+}
+
+.home-hero-link {
+  display: inline-flex;
+  min-height: 44px;
+  margin-top: clamp(30px, 4svh, 48px);
+  align-items: center;
+  gap: 9px;
+  color: var(--coral-dark);
+  font-size: 0.9rem;
+  font-weight: 800;
+  text-underline-offset: 5px;
+  text-decoration-thickness: 1px;
+  transition: color 160ms ease, gap 160ms ease;
+}
+
+.home-hero-link:hover {
+  gap: 13px;
+  color: var(--ink);
+}
+
 .hero-route {
   position: absolute;
   right: -3vw;
@@ -806,6 +866,30 @@ h3 {
 
 .app-store-link.is-disabled {
   cursor: default;
+}
+
+.app-row-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 18px;
+}
+
+.app-detail-link {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  gap: 7px;
+  color: var(--coral-dark);
+  font-size: 0.9rem;
+  font-weight: 800;
+  text-underline-offset: 5px;
+  transition: color 160ms ease, gap 160ms ease;
+}
+
+.app-detail-link:hover {
+  gap: 11px;
+  color: var(--ink);
 }
 
 .site-footer {

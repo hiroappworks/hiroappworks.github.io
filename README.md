@@ -20,6 +20,8 @@ Hiro App Worksのブランドトップページ、共通サポート、共通プ
 ```text
 .
 ├── index.html
+├── consignment-note/
+│   └── index.html
 ├── styles.css
 ├── script.js
 ├── site-config.js
@@ -51,6 +53,7 @@ python3 -m http.server 4173 --bind 127.0.0.1
 ```
 
 - Brand: http://127.0.0.1:4173/
+- Consignment Note: http://127.0.0.1:4173/consignment-note/
 - Support: http://127.0.0.1:4173/support/
 - Privacy: http://127.0.0.1:4173/privacy/
 
@@ -62,7 +65,7 @@ python3 -m http.server 4173 --bind 127.0.0.1
 
 ## アプリ追加
 
-現在のアプリ行は `index.html` の `data-app="consignment-note"` を持つ `article.app-row` です。2作目以降はこの単位で行を追加し、各アプリの素材を `assets/apps/<app-name>/` に分離します。
+ブランドトップのアプリ行は `index.html` の `data-app="consignment-note"` を持つ `article.app-row` です。2作目以降はこの単位で行を追加し、各アプリの素材を `assets/apps/<app-name>/` に分離します。委託販売ノートの詳細ページは `consignment-note/index.html` です。
 
 ## 素材
 

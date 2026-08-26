@@ -38,7 +38,7 @@
 
     <header class="site-header" data-site-header>
       <div class="site-header-inner">
-        <a class="brand-link" href="#top" aria-label="Hiro App Works トップへ">
+        <a class="brand-link" href="/" aria-label="Hiro App Works トップへ" aria-current="page">
           <span class="brand-mark-shell" aria-hidden="true">
             <img src="/assets/brand/hiro-app-works-mark.svg" alt="" width="26" height="27">
           </span>
@@ -54,155 +54,60 @@
     </header>
 
     <main id="main-content">
-      <section id="top" class="hero-scene" aria-labelledby="hero-title" data-hero-scene>
-        <div class="hero-sticky">
-          <div class="hero-inner">
-            <div class="hero-copy" data-hero-copy>
-              <p class="hero-brand">Hiro App Works</p>
-              <h1 id="hero-title">
-                <span>日々の<span class="jp-keep">小さな</span><span class="jp-keep">面倒を、</span></span>
-                <span><span class="jp-keep">シンプルな</span><span class="jp-keep">アプリに。</span></span>
-              </h1>
-              <p class="hero-description">
-                <span>iPhoneを、もう少し便利に。</span>
-                <span><span class="jp-keep">小さな</span>課題に寄り添うアプリを<span class="jp-keep">つくっています。</span></span>
-              </p>
-            </div>
-
-            <div class="hero-route" aria-hidden="true" data-hero-route>
-              <span class="route-line route-line-one"></span>
-              <span class="route-node route-node-circle"></span>
-              <span class="route-line route-line-two"></span>
-              <span class="route-node route-node-diamond"></span>
-              <span class="route-line route-line-three"></span>
-              <span class="route-node route-node-square"></span>
-            </div>
-
-            <p class="scroll-cue" aria-hidden="true">
-              <span>Scroll</span>
-              <span class="scroll-cue-line"></span>
+      <section class="brand-home-hero" aria-labelledby="home-title" data-home-hero>
+        <div class="hero-inner">
+          <div class="hero-copy" data-home-hero-copy>
+            <p class="hero-brand">Hiro App Works</p>
+            <h1 id="home-title">
+              <span>日々の<span class="jp-keep">小さな</span><span class="jp-keep">面倒を、</span></span>
+              <span><span class="jp-keep">シンプルな</span><span class="jp-keep">アプリに。</span></span>
+            </h1>
+            <p class="hero-description">
+              <span>iPhoneを、もう少し便利に。</span>
+              <span><span class="jp-keep">小さな</span>課題に寄り添うアプリを<span class="jp-keep">つくっています。</span></span>
             </p>
+            <a class="home-hero-link" href="#apps">公開中のアプリを見る <span aria-hidden="true">→</span></a>
           </div>
+
+          <div class="hero-route" data-home-hero-route aria-hidden="true">
+            <span class="route-line route-line-one"></span>
+            <span class="route-node route-node-circle"></span>
+            <span class="route-line route-line-two"></span>
+            <span class="route-node route-node-diamond"></span>
+            <span class="route-line route-line-three"></span>
+            <span class="route-node route-node-square"></span>
+          </div>
+
+          <p class="scroll-cue" aria-hidden="true">
+            <span>Scroll</span>
+            <span class="scroll-cue-line"></span>
+          </p>
         </div>
       </section>
 
-      <section class="product-story" aria-labelledby="product-story-title" data-product-story data-active-step="0">
-        <h2 id="product-story-title" class="visually-hidden">委託販売ノートのご紹介</h2>
-        <div class="story-layout">
-          <aside class="story-media" aria-label="委託販売ノートの画面例">
-            <div class="story-product-label" data-product-label>
-              <img src="/assets/apps/consignment-note/app-icon.webp" alt="" width="72" height="72">
-              <div>
-                <span class="story-product-number">App 01</span>
-                <strong>委託販売ノート</strong>
-              </div>
-            </div>
-
-            <div class="phone-stage" data-phone-stage>
-              <span class="phone-orbit phone-orbit-one" aria-hidden="true"></span>
-              <span class="phone-orbit phone-orbit-two" aria-hidden="true"></span>
-              <div class="app-preview-frame">
-                <div class="app-preview-screen">
-                  <img class="app-preview-image is-active" data-screen="0" src="/assets/apps/consignment-note/screens/home.webp" alt="委託販売ノートのホーム画面" width="660" height="1434">
-                  <img class="app-preview-image" data-screen="1" src="/assets/apps/consignment-note/screens/locations.webp" alt="販売場所を一覧で管理する画面" width="660" height="1434" loading="lazy">
-                  <img class="app-preview-image" data-screen="2" src="/assets/apps/consignment-note/screens/remaining-count.webp" alt="残っている数から販売数を記録する画面" width="660" height="1434" loading="lazy">
-                  <img class="app-preview-image" data-screen="3" src="/assets/apps/consignment-note/screens/settlement.webp" alt="売上と精算内容を確認する画面" width="660" height="1434" loading="lazy">
-                </div>
-              </div>
-            </div>
-
-            <div class="story-progress" aria-hidden="true">
-              <span class="story-progress-label">02</span>
-              <span class="story-progress-track"><span data-story-progress-bar></span></span>
-              <span class="story-progress-label">05</span>
-            </div>
-          </aside>
-
-          <div class="story-copy-rail">
-            <article class="story-step is-active" data-story-step="0">
-              <div class="story-step-inner">
-                <p class="scene-number">Scene 02</p>
-                <p class="story-app-name">委託販売ノート</p>
-                <h3>
-                  <span>「何個置いた？」</span>
-                  <span>「何個売れた？」</span>
-                  <span>「いくら入る？」を、ひとつに。</span>
-                </h3>
-                <p class="story-supporting-copy">
-                  <span>ハンドメイド委託販売の</span>
-                  <span>在庫・売上・精算をシンプルに管理。</span>
-                </p>
-              </div>
-            </article>
-
-            <article class="story-step" data-story-step="1">
-              <div class="story-step-inner">
-                <p class="scene-number">Scene 03</p>
-                <h3><span class="jp-keep">販売場所</span>ごとの<span class="jp-keep">在庫</span>が、すぐ分かる。</h3>
-                <p class="story-supporting-copy">
-                  <span>自宅・委託先ごとの<span class="jp-keep">在庫</span>を<span class="jp-keep">まとめて</span>管理。</span>
-                  <span>紙や<span class="jp-keep">メモ</span>を<span class="jp-keep">行き来</span>する手間を減らします。</span>
-                </p>
-              </div>
-            </article>
-
-            <article class="story-step" data-story-step="2">
-              <div class="story-step-inner">
-                <p class="scene-number">Scene 04</p>
-                <h3 class="story-two-beats">
-                  <span><span class="jp-keep">残っている数</span>を入れるだけ。</span>
-                  <strong><span class="jp-keep">売れた数</span>を<span class="jp-keep">自動</span>で計算。</strong>
-                </h3>
-                <p class="story-supporting-copy">
-                  <span><span class="jp-keep">販売先</span>の<span class="jp-keep">残数</span>が<span class="jp-keep">分かったら</span><span class="jp-keep">入力するだけ</span>。</span>
-                  <span><span class="jp-keep">販売数</span>を<span class="jp-keep">毎回</span><span class="jp-keep">電卓</span>で計算する必要はありません。</span>
-                </p>
-                <p class="calculation-flow" aria-label="残数から販売数を計算">
-                  <span>残数</span><span aria-hidden="true">→</span><strong>販売数</strong>
-                </p>
-              </div>
-            </article>
-
-            <article class="story-step" data-story-step="3">
-              <div class="story-step-inner">
-                <p class="scene-number">Scene 05</p>
-                <h3><span class="jp-keep">売上</span>も、<span class="jp-keep">精算</span>も、<span class="jp-keep">ひとつの流れ</span>で。</h3>
-                <p class="story-supporting-copy">
-                  <span><span class="jp-keep">販売記録</span>から<span class="jp-keep">売上</span>を確認し、</span>
-                  <span>委託先との<span class="jp-keep">精算</span>まで<span class="jp-keep">まとめて</span>管理できます。</span>
-                </p>
-                <ol class="workflow" aria-label="在庫から精算までの流れ">
-                  <li>在庫</li>
-                  <li>販売</li>
-                  <li>売上</li>
-                  <li>精算</li>
-                </ol>
-              </div>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <section id="apps" class="apps-section" aria-labelledby="apps-title">
+      <section id="apps" class="apps-section home-apps" aria-labelledby="apps-title" data-home-apps data-home-reveal>
         <div class="section-inner">
           <div class="section-heading">
-            <p class="section-number">06 / Apps</p>
+            <p class="section-number">01 / Apps</p>
             <h2 id="apps-title">Apps</h2>
             <p>Hiro App Worksがつくる、日々の小さな課題に寄り添うアプリ。</p>
           </div>
 
           <div class="apps-list">
-            <article class="app-row" data-app="consignment-note">
-              <div class="app-row-icon">
+            <article class="app-row home-app-row" data-app="consignment-note">
+              <div class="app-row-icon" data-home-app-icon>
                 <img src="/assets/apps/consignment-note/app-icon.webp" alt="委託販売ノートのアプリアイコン" width="512" height="512" loading="lazy">
               </div>
               <div class="app-row-copy">
                 <p class="app-index">App 01</p>
                 <h3>委託販売ノート</h3>
                 <p>ハンドメイド委託販売の在庫・売上・精算を、ひとつに。</p>
-                <a class="app-store-link is-disabled" data-app-store-link aria-disabled="true" aria-label="委託販売ノートをApp Storeで表示（新しいタブ）">
-                  <img class="app-store-badge" src="/assets/apple/download-on-the-app-store-ja-jp.svg" alt="App Storeでダウンロード" width="109" height="40">
-                </a>
+                <div class="app-row-actions">
+                  <a class="app-detail-link" href="/consignment-note/">詳しく見る <span aria-hidden="true">→</span></a>
+                  <a class="app-store-link is-disabled" data-app-store-link aria-disabled="true" aria-label="委託販売ノートをApp Storeで表示（新しいタブ）">
+                    <img class="app-store-badge" src="/assets/apple/download-on-the-app-store-ja-jp.svg" alt="App Storeでダウンロード" width="109" height="40">
+                  </a>
+                </div>
               </div>
             </article>
           </div>
@@ -228,7 +133,7 @@
       </div>
       <div class="footer-meta">
         <p>© 2026 Hiro App Works</p>
-        <a href="mailto:hiro.appworks@gmail.com">hiro.appworks@gmail.com</a>
+        <a href="mailto:contact@hiroappworks.com">contact@hiroappworks.com</a>
       </div>
       <p class="apple-trademark-credit">Apple、Appleのロゴ、およびiPhoneは、米国およびその他の国で登録されたApple Inc.の商標です。App Storeは、米国およびその他の国々で登録されたApple Inc.のサービスマークです。IOSは米国および他の国々におけるCiscoの商標または登録商標であり、ライセンスにもとづき使用されています。</p>
     </footer>

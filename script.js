@@ -12,9 +12,16 @@
   var progressBar = document.querySelector("[data-story-progress-bar]");
   var steps = Array.prototype.slice.call(document.querySelectorAll("[data-story-step]"));
   var screens = Array.prototype.slice.call(document.querySelectorAll("[data-screen]"));
+  var homeHero = document.querySelector("[data-home-hero]");
+  var homeHeroCopy = document.querySelector("[data-home-hero-copy]");
+  var homeHeroRoute = document.querySelector("[data-home-hero-route]");
+  var homeApps = document.querySelector("[data-home-apps]");
+  var homeAppIcon = document.querySelector("[data-home-app-icon]");
+  var homeRevealTargets = Array.prototype.slice.call(document.querySelectorAll("[data-home-reveal]"));
   var reduceMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
   var ticking = false;
   var activeStep = 0;
+  var homeRevealObserver = null;
 
   function clamp(value, min, max) {
     return Math.min(Math.max(value, min), max);
@@ -71,6 +78,39 @@
     if (header) {
       header.classList.toggle("is-scrolled", window.scrollY > 12);
     }
+  }
+
+  function updateHomeHero(viewportHeight) {
+    if (!homeHero || !homeHeroCopy || !homeHeroRoute) {
+      return;
+    }
+
+    var rect = homeHero.getBoundingClientRect();
+    var progress = clamp(-rect.top / Math.max(viewportHeight, 1), 0, 1);
+    var eased = 1 - Math.pow(1 - progress, 3);
+
+    homeHeroCopy.style.setProperty("--hero-y", mix(0, -34, eased).toFixed(2) + "px");
+    homeHeroCopy.style.setProperty("--hero-scale", mix(1, 0.96, eased).toFixed(4));
+    homeHeroCopy.style.setProperty("--home-hero-opacity", mix(1, 0.54, progress).toFixed(3));
+    homeHeroCopy.style.setProperty("--hero-description-opacity", mix(1, 0.18, progress).toFixed(3));
+    homeHeroCopy.style.setProperty("--hero-description-y", mix(0, -12, progress).toFixed(2) + "px");
+    homeHeroRoute.style.setProperty("--hero-route-x", mix(0, -24, eased).toFixed(2) + "px");
+    homeHeroRoute.style.setProperty("--hero-route-opacity", mix(0.75, 0.24, progress).toFixed(3));
+    homeHero.style.setProperty("--scroll-cue-opacity", mix(1, 0, clamp(progress * 2.2, 0, 1)).toFixed(3));
+  }
+
+  function updateHomeAppParallax() {
+    if (!homeApps || !homeAppIcon) {
+      return;
+    }
+
+    var viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+    var rect = homeApps.getBoundingClientRect();
+    var range = Math.max(viewportHeight + rect.height, 1);
+    var progress = clamp((viewportHeight - rect.top) / range, 0, 1);
+    var iconY = mix(18, -12, progress);
+
+    homeAppIcon.style.setProperty("--home-app-icon-y", iconY.toFixed(2) + "px");
   }
 
   function updateHero(viewportHeight) {
@@ -157,6 +197,8 @@
     }
 
     var viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+    updateHomeHero(viewportHeight);
+    updateHomeAppParallax();
     updateHero(viewportHeight);
     updateStory(viewportHeight);
   }
@@ -192,12 +234,52 @@
     });
   }
 
+  function setHomeRevealsVisible(isVisible) {
+    homeRevealTargets.forEach(function (target) {
+      target.classList.toggle("is-visible", isVisible);
+    });
+  }
+
+  function observeHomeReveals() {
+    if (homeRevealObserver) {
+      homeRevealObserver.disconnect();
+      homeRevealObserver = null;
+    }
+
+    if (homeRevealTargets.length === 0) {
+      return;
+    }
+
+    if (reduceMotionQuery.matches || !("IntersectionObserver" in window)) {
+      setHomeRevealsVisible(true);
+      return;
+    }
+
+    setHomeRevealsVisible(false);
+    homeRevealObserver = new IntersectionObserver(function (entries, observer) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      rootMargin: "0px 0px -10% 0px",
+      threshold: 0.1,
+    });
+
+    homeRevealTargets.forEach(function (target) {
+      homeRevealObserver.observe(target);
+    });
+  }
+
   function resetMotionStyles() {
-    [heroCopy, heroRoute, phoneStage, productLabel, story, progressBar].forEach(function (element) {
+    [heroCopy, heroRoute, phoneStage, productLabel, story, progressBar, homeHero, homeHeroCopy, homeHeroRoute, homeAppIcon].forEach(function (element) {
       if (element) {
         element.removeAttribute("style");
       }
     });
+    observeHomeReveals();
     activateStep(0);
     requestUpdate();
   }
@@ -205,6 +287,7 @@
   root.classList.add("has-js");
   setAppStoreLink();
   observeSteps();
+  observeHomeReveals();
   activateStep(0);
   update();
 
