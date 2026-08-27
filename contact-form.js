@@ -251,11 +251,7 @@
     setTurnstileStatus("送信前の認証を読み込んでいます。");
 
     var onScriptReady = function () {
-      if (window.turnstile && typeof window.turnstile.ready === "function") {
-        window.turnstile.ready(renderTurnstile);
-      } else {
-        renderTurnstile();
-      }
+      renderTurnstile();
     };
     var existingScript = document.querySelector("script[data-turnstile-api]");
 
@@ -269,7 +265,7 @@
     }
 
     var script = document.createElement("script");
-    script.src = "https://challenges.cloudflare.com/turnstile/v0/api.js";
+    script.src = "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";
     script.async = true;
     script.defer = true;
     script.dataset.turnstileApi = "true";
