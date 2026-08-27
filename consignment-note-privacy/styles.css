@@ -179,3 +179,26 @@
     padding-left: 15px;
   }
 }
+
+.policy-section-date-line,
+.policy-section-date-separator {
+  display: inline;
+}
+
+@media (max-width: 560px) {
+  .policy-section-date {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+  }
+
+  .policy-section-date-line {
+    display: block;
+    white-space: nowrap;
+  }
+
+  .policy-section-date-separator {
+    display: none;
+  }
+}
