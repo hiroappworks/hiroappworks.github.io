@@ -29,6 +29,53 @@
   var setupNote = form.querySelector("[data-setup-note]");
   var turnstileWidget = form.querySelector("[data-turnstile-widget]");
   var turnstileStatus = form.querySelector("[data-turnstile-status]");
+  var locale = localeInput && localeInput.value.trim() === "en" ? "en" : "ja";
+  var messages = locale === "en" ? {
+    submitting: "Sending…",
+    submitted: "Sent",
+    setupPending: "Preparing submission",
+    needsVerification: "Complete verification to send",
+    submit: "Send",
+    appRequired: "Please select an app.",
+    inquiryRequired: "Please select an inquiry type.",
+    messageRequired: "Please enter your message.",
+    messageMax: "Message must be 5,000 characters or fewer.",
+    emailRequired: "Please enter your reply email address.",
+    emailInvalid: "Please check the email address format.",
+    appVersionMax: "App version must be 120 characters or fewer.",
+    iosDeviceMax: "iOS version / iPhone model must be 160 characters or fewer.",
+    configError: "Submission settings are currently being prepared. If your matter is urgent, please contact us by email.",
+    verificationRequired: "Please complete the verification before sending.",
+    verificationLoadError: "We couldn't load the verification. Please reload and try again later.",
+    verificationComplete: "Verification complete. You can send your message.",
+    verificationFailed: "Verification could not be completed. Please try again.",
+    verificationLoading: "Loading verification before sending.",
+    fallbackFrameTitle: "Submission result",
+    submitError: "We couldn't send your message. Please try again later. Your message has been kept."
+  } : {
+    submitting: "送信中…",
+    submitted: "送信済み",
+    setupPending: "送信設定を準備中",
+    needsVerification: "認証後に送信",
+    submit: "送信する",
+    appRequired: "対象アプリを選択してください。",
+    inquiryRequired: "お問い合わせ種別を選択してください。",
+    messageRequired: "お問い合わせ内容を入力してください。",
+    messageMax: "お問い合わせ内容は5,000文字以内で入力してください。",
+    emailRequired: "返信先メールアドレスを入力してください。",
+    emailInvalid: "メールアドレスの形式を確認してください。",
+    appVersionMax: "アプリのバージョンは120文字以内で入力してください。",
+    iosDeviceMax: "iOSバージョン／iPhone機種は160文字以内で入力してください。",
+    configError: "現在、送信設定を準備中です。お急ぎの場合はメールでご連絡ください。",
+    verificationRequired: "送信前に確認を完了してください。",
+    verificationLoadError: "認証を読み込めませんでした。時間をおいて再読み込みしてください。",
+    verificationComplete: "確認が完了しました。送信できます。",
+    verificationFailed: "認証を完了できませんでした。もう一度お試しください。",
+    verificationLoading: "送信前の認証を読み込んでいます。",
+    fallbackFrameTitle: "送信結果",
+    submitError: "送信できませんでした。時間をおいてもう一度お試しください。送信内容は保持されています。"
+  };
+  var successUrl = form.getAttribute("data-success-url") || "/contact/thanks/";
   var errorElements = {};
   var isSubmitting = false;
   var submissionComplete = false;
@@ -94,26 +141,26 @@
     }
     if (isSubmitting) {
       submitButton.disabled = true;
-      submitButton.textContent = "送信中…";
+      submitButton.textContent = messages.submitting;
       return;
     }
     if (submissionComplete) {
       submitButton.disabled = true;
-      submitButton.textContent = "送信済み";
+      submitButton.textContent = messages.submitted;
       return;
     }
     if (!isConfigured) {
       submitButton.disabled = true;
-      submitButton.textContent = "送信設定を準備中";
+      submitButton.textContent = messages.setupPending;
       return;
     }
     if (!turnstileState.token) {
       submitButton.disabled = true;
-      submitButton.textContent = "認証後に送信";
+      submitButton.textContent = messages.needsVerification;
       return;
     }
     submitButton.disabled = false;
-    submitButton.textContent = "送信する";
+    submitButton.textContent = messages.submit;
   }
 
   function validateForm() {
@@ -123,39 +170,39 @@
     clearFieldErrors();
 
     if (!trimmedValue(controls.appId)) {
-      setFieldError("appId", "対象アプリを選択してください。");
+      setFieldError("appId", messages.appRequired);
       firstInvalid = firstInvalid || controls.appId;
     }
 
     if (!trimmedValue(controls.inquiryTypeId)) {
-      setFieldError("inquiryTypeId", "お問い合わせ種別を選択してください。");
+      setFieldError("inquiryTypeId", messages.inquiryRequired);
       firstInvalid = firstInvalid || controls.inquiryTypeId;
     }
 
     if (!trimmedValue(controls.message)) {
-      setFieldError("message", "お問い合わせ内容を入力してください。");
+      setFieldError("message", messages.messageRequired);
       firstInvalid = firstInvalid || controls.message;
     } else if (controls.message.value.length > controls.message.maxLength) {
-      setFieldError("message", "お問い合わせ内容は5,000文字以内で入力してください。");
+      setFieldError("message", messages.messageMax);
       firstInvalid = firstInvalid || controls.message;
     }
 
     var email = trimmedValue(controls.email);
     if (!email) {
-      setFieldError("email", "返信先メールアドレスを入力してください。");
+      setFieldError("email", messages.emailRequired);
       firstInvalid = firstInvalid || controls.email;
     } else if (!emailPattern.test(email) || !controls.email.checkValidity()) {
-      setFieldError("email", "メールアドレスの形式を確認してください。");
+      setFieldError("email", messages.emailInvalid);
       firstInvalid = firstInvalid || controls.email;
     }
 
     if (controls.appVersion.value.length > controls.appVersion.maxLength) {
-      setFieldError("appVersion", "アプリのバージョンは120文字以内で入力してください。");
+      setFieldError("appVersion", messages.appVersionMax);
       firstInvalid = firstInvalid || controls.appVersion;
     }
 
     if (controls.iosDevice.value.length > controls.iosDevice.maxLength) {
-      setFieldError("iosDevice", "iOSバージョン／iPhone機種は160文字以内で入力してください。");
+      setFieldError("iosDevice", messages.iosDeviceMax);
       firstInvalid = firstInvalid || controls.iosDevice;
     }
 
@@ -165,12 +212,12 @@
     }
 
     if (!isConfigured) {
-      setStatus("現在、送信設定を準備中です。お急ぎの場合はメールでご連絡ください。", "error");
+      setStatus(messages.configError, "error");
       return null;
     }
 
     if (!turnstileState.token) {
-      setTurnstileStatus("送信前に確認を完了してください。");
+      setTurnstileStatus(messages.verificationRequired);
       return null;
     }
 
@@ -181,7 +228,7 @@
       email: email,
       appVersion: controls.appVersion.value.trim(),
       iosDevice: controls.iosDevice.value.trim(),
-      locale: localeInput.value.trim(),
+      locale: locale,
       requestId: createRequestId(),
       turnstileToken: turnstileState.token,
       honeypot: ""
@@ -198,25 +245,25 @@
         // The widget can be unavailable after a network interruption.
       }
     }
-    setTurnstileStatus(isConfigured ? "送信前に確認を完了してください。" : "送信設定を準備中です。");
+    setTurnstileStatus(isConfigured ? messages.verificationRequired : messages.setupPending);
     updateSubmitButton();
   }
 
   function renderTurnstile() {
     if (!window.turnstile || typeof window.turnstile.render !== "function") {
-      setTurnstileStatus("認証を読み込めませんでした。時間をおいて再読み込みしてください。");
+      setTurnstileStatus(messages.verificationLoadError);
       return;
     }
 
     try {
-      turnstileState.widgetId = window.turnstile.render(turnstileWidget, {
+      var turnstileOptions = {
         sitekey: turnstileSiteKey,
         action: "contact",
         responseField: false,
         callback: function (token) {
           turnstileState.token = token;
           turnstileTokenInput.value = token;
-          setTurnstileStatus("確認が完了しました。送信できます。");
+          setTurnstileStatus(messages.verificationComplete);
           updateSubmitButton();
         },
         "expired-callback": function () {
@@ -224,14 +271,21 @@
         },
         "error-callback": function () {
           resetTurnstile();
-          setTurnstileStatus("認証を完了できませんでした。もう一度お試しください。");
+          setTurnstileStatus(messages.verificationFailed);
         }
-      });
+      };
+      if (locale === "en") {
+        turnstileOptions.language = "en";
+      }
+      if (document.documentElement.clientWidth <= 340) {
+        turnstileOptions.size = "compact";
+      }
+      turnstileState.widgetId = window.turnstile.render(turnstileWidget, turnstileOptions);
       turnstileState.ready = true;
-      setTurnstileStatus("送信前に確認を完了してください。");
+      setTurnstileStatus(messages.verificationRequired);
       updateSubmitButton();
     } catch (error) {
-      setTurnstileStatus("認証を読み込めませんでした。時間をおいて再読み込みしてください。");
+      setTurnstileStatus(messages.verificationLoadError);
     }
   }
 
@@ -240,7 +294,7 @@
       if (setupNote) {
         setupNote.hidden = false;
       }
-      setTurnstileStatus("送信設定を準備中です。");
+      setTurnstileStatus(messages.setupPending);
       updateSubmitButton();
       return;
     }
@@ -248,7 +302,7 @@
     if (setupNote) {
       setupNote.hidden = true;
     }
-    setTurnstileStatus("送信前の認証を読み込んでいます。");
+    setTurnstileStatus(messages.verificationLoading);
 
     var onScriptReady = function () {
       renderTurnstile();
@@ -271,7 +325,7 @@
     script.dataset.turnstileApi = "true";
     script.addEventListener("load", onScriptReady, { once: true });
     script.addEventListener("error", function () {
-      setTurnstileStatus("認証を読み込めませんでした。時間をおいて再読み込みしてください。");
+      setTurnstileStatus(messages.verificationLoadError);
     }, { once: true });
     document.head.appendChild(script);
   }
@@ -282,7 +336,7 @@
     }
     fallbackFrame = document.createElement("iframe");
     fallbackFrame.name = "hiro-app-works-contact-response";
-    fallbackFrame.title = "送信結果";
+    fallbackFrame.title = messages.fallbackFrameTitle;
     fallbackFrame.tabIndex = -1;
     fallbackFrame.hidden = true;
     fallbackFrame.setAttribute("aria-hidden", "true");
@@ -429,9 +483,9 @@
       });
     }).then(function () {
       submissionComplete = true;
-      window.location.assign("/contact/thanks/");
+      window.location.assign(successUrl);
     }).catch(function () {
-      setStatus("送信できませんでした。時間をおいてもう一度お試しください。送信内容は保持されています。", "error");
+      setStatus(messages.submitError, "error");
       resetTurnstile();
     }).finally(function () {
       isSubmitting = false;
