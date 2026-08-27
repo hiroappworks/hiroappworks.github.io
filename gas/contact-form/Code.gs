@@ -335,7 +335,25 @@ function resolveFormItems_(form) {
       throw publicError_("service_unavailable");
     }
     var item = matches[0];
-    if (definition.types.indexOf(item.getType()) === -1 || item.isRequired() !== definition.required) {
+    var type = item.getType();
+    if (definition.types.indexOf(type) === -1) {
+      throw publicError_("service_unavailable");
+    }
+
+    var isRequired;
+    if (type === FormApp.ItemType.TEXT) {
+      isRequired = item.asTextItem().isRequired();
+    } else if (type === FormApp.ItemType.PARAGRAPH_TEXT) {
+      isRequired = item.asParagraphTextItem().isRequired();
+    } else if (type === FormApp.ItemType.LIST) {
+      isRequired = item.asListItem().isRequired();
+    } else if (type === FormApp.ItemType.MULTIPLE_CHOICE) {
+      isRequired = item.asMultipleChoiceItem().isRequired();
+    } else {
+      throw publicError_("service_unavailable");
+    }
+
+    if (isRequired !== definition.required) {
       throw publicError_("service_unavailable");
     }
     resolved[key] = item;

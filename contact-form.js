@@ -429,10 +429,7 @@
       });
     }).then(function () {
       submissionComplete = true;
-      setStatus("お問い合わせを受け付けました。内容を確認のうえ、必要に応じて返信いたします。", "success");
-      turnstileState.token = "";
-      turnstileTokenInput.value = "";
-      setTurnstileStatus("送信が完了しました。");
+      window.location.assign("/contact/thanks/");
     }).catch(function () {
       setStatus("送信できませんでした。時間をおいてもう一度お試しください。送信内容は保持されています。", "error");
       resetTurnstile();
