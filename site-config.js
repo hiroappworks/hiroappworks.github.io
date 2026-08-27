@@ -13,6 +13,6 @@ window.HIRO_APP_WORKS_CONFIG = Object.freeze({
   }),
   contact: Object.freeze({
     endpoint: "https://script.google.com/macros/s/AKfycbz-HYu58yyQj9rGQ-mdM5o6t60bnzd3ykk1ODkAW2RnnjZStdhH5pp_2Gt5LIXiy_F2/exec",
-    turnstileSiteKey: "0x4AAAAAAEdvACOIW8XD4Isse4SIp_mCSIA",
+    turnstileSiteKey: "0x4AAAAAAEdvAPop5dGVj6n5",
   }),
 });
