@@ -6,10 +6,12 @@
   var routes = {
     "/": {ja: "/", en: "/en/"},
     "/privacy": {ja: "/privacy/", en: "/en/privacy/"},
+    "/consignment-note-privacy": {ja: "/consignment-note-privacy/", en: "/en/consignment-note-privacy/"},
     "/contact": {ja: "/contact/", en: "/en/contact/"},
     "/contact/thanks": {ja: "/contact/thanks/", en: "/en/contact/thanks/"},
     "/en": {ja: "/", en: "/en/"},
     "/en/privacy": {ja: "/privacy/", en: "/en/privacy/"},
+    "/en/consignment-note-privacy": {ja: "/consignment-note-privacy/", en: "/en/consignment-note-privacy/"},
     "/en/contact": {ja: "/contact/", en: "/en/contact/"},
     "/en/contact/thanks": {ja: "/contact/thanks/", en: "/en/contact/thanks/"}
   };
