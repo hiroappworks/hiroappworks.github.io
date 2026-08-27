@@ -10,6 +10,14 @@
   margin-bottom: 18px;
 }
 
+.thanks-title-line {
+  white-space: nowrap;
+}
+
+.thanks-title-break {
+  display: none;
+}
+
 .thanks-actions {
   margin-top: 34px;
 }
@@ -54,6 +62,14 @@
 
   .thanks-actions {
     margin-top: 28px;
+  }
+
+  .thanks-title-break {
+    display: block;
+  }
+
+  .thanks-hero h1 {
+    font-size: clamp(2rem, 11.5vw, 2.8rem);
   }
 
   .thanks-home-link {
