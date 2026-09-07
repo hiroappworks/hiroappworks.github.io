@@ -1,0 +1,17 @@
+{
+  "schemaVersion": "playorder-series-evidence-public-reconciliation-v1",
+  "correction": {
+    "oldField": "cohort.fetchedWikidataEntityCount",
+    "oldRecordedValue": 0,
+    "oldValueMeaning": "New base Wikidata entity fetches in the final resume invocation only.",
+    "authoritativeMeaning": "The complete compact-Series cohort, separated into reused prior evidence and newly checkpointed entities."
+  },
+  "cohort": {
+    "baseSeries": 1150,
+    "priorEvidenceReused": 12,
+    "newlyCheckpointed": 1138,
+    "accountedFor": 1150
+  },
+  "invariant": true,
+  "immutableSourceArtifactChanged": false
+}
