@@ -2,7 +2,7 @@
   "schemaVersion": "playorder-attribution-site-dist-manifest-v1",
   "releaseId": "series-evidence-0bb60001c960-e0a363d50dcb-93880a952470",
   "releaseIdentity": "93880a9524707ce5e2efed64189f87592c5be927e10950415e322478ce390377",
-  "status": "prepared_not_published",
+  "status": "attribution_published_search_not_deployed",
   "controlFiles": [
     {
       "path": "SITE_DIST_MANIFEST.json",
@@ -12,8 +12,8 @@
   "files": [
     {
       "path": "playorder/data-sources/index.html",
-      "bytes": 1863,
-      "sha256": "acd64682a07628ee8595a1460a7840ce0af450f7b14106a38b5c2c211502362f"
+      "bytes": 2180,
+      "sha256": "29a22dc8cb10ecdbba3194096a16571bdb9435e87fb152427071204faf9c8860"
     },
     {
       "path": "playorder/data-sources/releases/series-evidence-0bb60001c960-e0a363d50dcb-93880a952470/CHECKSUMS.sha256",
