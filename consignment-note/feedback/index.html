@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="委託販売ノートへのご意見・ご要望。名前・メールアドレス不要、個別の返信は行いません。">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="referrer" content="no-referrer">
+  <meta name="color-scheme" content="light">
+  <title>ご意見・ご要望 — 委託販売ノート | Hiro App Works</title>
+  <link rel="canonical" href="https://hiroappworks.com/consignment-note/feedback/">
+  <link rel="alternate" hreflang="ja" href="https://hiroappworks.com/consignment-note/feedback/">
+  <link rel="alternate" hreflang="en" href="https://hiroappworks.com/en/consignment-note/feedback/">
+  <link rel="icon" href="/favicon.ico">
+  <link rel="stylesheet" href="/utility-pages.css">
+  <link rel="stylesheet" href="/feedback-form.css">
+  <script defer src="/feedback-config.js"></script>
+  <script defer src="/feedback-form.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">本文へ移動</a>
+  <header class="feedback-header">
+    <a class="feedback-brand" href="/" aria-label="Hiro App Works ホームへ"><img src="/assets/brand/hiro-app-works-mark.svg" width="26" height="27" alt="">Hiro App Works</a>
+    <nav class="feedback-language" aria-label="言語"><a href="/consignment-note/feedback/" lang="ja" aria-current="page">日本語</a><a href="/en/consignment-note/feedback/" lang="en">English</a></nav>
+  </header>
+  <main id="main-content" class="feedback-page">
+    <div class="feedback-intro">
+      <p class="feedback-eyebrow">委託販売ノート</p>
+      <h1>ご意見・ご要望</h1>
+      <p class="feedback-testing"><strong>動作確認中</strong><br>現在、このフォームは動作確認中です。一般のお問い合わせや返信が必要な場合は、<a href="/contact/">お問い合わせフォーム</a>をご利用ください。</p>
+      <p>使いにくかったところ、気になった点、あったら便利なことなどをお聞かせください。</p>
+      <p>名前・メールアドレスは不要です。個別の返信は行いません。<br>返信が必要な方は、<a href="/contact/">お問い合わせフォーム</a>をご利用ください。</p>
+    </div>
+    <div class="feedback-card">
+      <p id="feedback-status" class="feedback-status" role="status" aria-live="polite">ただいま準備中です。この画面からはまだ送信できません。</p>
+      <form id="feedback-form" novalidate>
+        <label for="feedback-message">ご意見・ご要望 <span class="feedback-required">必須</span></label>
+        <textarea id="feedback-message" name="message" rows="7" maxlength="5000" required placeholder="一言でも構いません。" aria-describedby="feedback-guidance feedback-limit feedback-error"></textarea>
+        <p id="feedback-limit" class="feedback-small">1〜5,000文字</p>
+        <p id="feedback-guidance" class="feedback-small">お名前・連絡先などの個人情報や、実際の売上などは入力しないでください。</p>
+        <p class="feedback-small">送信内容はアプリ改善の参考にします。情報の取扱いは<a href="/privacy/">プライバシーポリシー</a>をご確認ください。</p>
+        <input type="hidden" name="honeypot" value="">
+        <div id="feedback-security" aria-label="セキュリティ確認"></div>
+        <button id="feedback-retry-security" class="feedback-security-retry" type="button" hidden>セキュリティ確認をやり直す</button>
+        <p id="feedback-error" class="feedback-error" role="alert" hidden></p>
+        <button class="feedback-send" type="submit" disabled>送信する</button>
+      </form>
+      <section id="feedback-success" class="feedback-success" tabindex="-1" aria-labelledby="feedback-success-title" hidden>
+        <h2 id="feedback-success-title">ご意見ありがとうございます。</h2>
+        <p>今後の改善の参考にします。<br>このフォームへの個別の返信は行いません。</p>
+        <p>返信が必要な方は、<a href="/contact/">お問い合わせフォーム</a>をご利用ください。</p>
+      </section>
+      <noscript><p>送信にはJavaScriptが必要です。返信が必要な場合は<a href="/contact/">お問い合わせフォーム</a>をご利用ください。</p></noscript>
+    </div>
+  </main>
+  <footer class="feedback-footer"><a href="/">Hiro App Works</a><a href="/privacy/">プライバシーポリシー</a></footer>
+</body>
+</html>
