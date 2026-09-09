@@ -10,6 +10,13 @@ function doGet() {
 }
 
 function doPost(e) {
+  // One fixed, payload-free probe; the normal parser still rejects this request.
+  try {
+    if (e && !e.queryString && e.postData && e.postData.contents === '{}' &&
+        ['text/plain', 'application/json'].includes(String(e.postData.type || '').split(';')[0].trim())) {
+      fbSiteverifyDiagnostic_(PropertiesService.getScriptProperties(), 'probe');
+    }
+  } catch (_) { /* Probe failures cannot affect the public response. */ }
   let input;
   let result;
   try {
@@ -143,6 +150,56 @@ function fbPruneReceipts_(props, now) {
   return count;
 }
 
+// Operator-only, fail-silent diagnostics. No payloads, raw errors, or identifiers.
+function fbSiteverifyDiagnostic_(props, stage, transport, status, jsonOk, verification) {
+  try {
+    if (props.getProperty('FEEDBACK_SITEVERIFY_DIAGNOSTICS_ENABLED') !== 'true') return;
+    const until = props.getProperty('FEEDBACK_SITEVERIFY_DIAGNOSTICS_UNTIL');
+    const parts = typeof until === 'string' && until.match(/^([1-9]\d{3})-(\d{2})-(\d{2})T([01]\d|2[0-3]):([0-5]\d):([0-5]\d)(?:\.\d{1,3})?(?:Z|[+-](?:[01]\d|2[0-3]):[0-5]\d)$/);
+    if (!parts || Number(parts[2]) < 1 || Number(parts[2]) > 12 || Number(parts[3]) < 1 ||
+        Number(parts[3]) > new Date(Date.UTC(Number(parts[1]), Number(parts[2]), 0)).getUTCDate() ||
+        !Number.isFinite(Date.parse(until)) || Date.now() >= Date.parse(until)) return;
+    if (stage === 'probe') {
+      console.log('feedback_diagnostic_probe_v1');
+      return;
+    }
+    const stages = ['started', 'request_exception', 'http_failure', 'json_failure',
+      'cloudflare_rejected', 'action_mismatch', 'hostname_mismatch', 'verified'];
+    if (!stages.includes(stage) || !['fetch', 'iframe'].includes(transport)) return;
+    const allowed = ['missing-input-secret', 'invalid-input-secret', 'missing-input-response',
+      'invalid-input-response', 'bad-request', 'timeout-or-duplicate', 'internal-error'];
+    const codes = jsonOk === true && verification && verification['error-codes'];
+    const parsed = jsonOk === true;
+    const checkedAction = ['action_mismatch', 'hostname_mismatch', 'verified'].includes(stage);
+    const checkedHostname = ['hostname_mismatch', 'verified'].includes(stage);
+    const propertyEntry = {
+      marker: 'feedback_siteverify_diag_v2', stage: stage,
+      httpStatus: Number.isInteger(status) ? status : null,
+      success: parsed ? Boolean(verification && verification.success === true) : null,
+      errorCodes: Array.isArray(codes) ? allowed.filter(function (code) { return codes.includes(code); }) : [],
+      unknownErrorCode: Array.isArray(codes) ? codes.some(function (code) { return !allowed.includes(code); }) :
+        (codes !== undefined && codes !== null && codes !== false),
+      actionMatch: checkedAction ? stage !== 'action_mismatch' : null,
+      hostnameMatch: checkedHostname ? stage === 'verified' : null,
+      transport: transport,
+      at: new Date().toISOString()
+    };
+    props.setProperty('FEEDBACK_SITEVERIFY_DIAGNOSTIC_LAST', JSON.stringify(propertyEntry));
+    const entry = {
+      marker: 'feedback_siteverify_diag_v1', stage: stage, transport: transport,
+      http_status: Number.isInteger(status) ? status : null,
+      json_ok: typeof jsonOk === 'boolean' ? jsonOk : null,
+      success_strict: parsed ? Boolean(verification && verification.success === true) : null,
+      action_matches: checkedAction ? stage !== 'action_mismatch' : null,
+      hostname_matches: checkedHostname ? stage === 'verified' : null,
+      error_codes: Array.isArray(codes) ? allowed.filter(function (code) { return codes.includes(code); }) : [],
+      unknown_error_code: Array.isArray(codes) ? codes.some(function (code) { return !allowed.includes(code); }) :
+        (codes !== undefined && codes !== null && codes !== false)
+    };
+    console.log(JSON.stringify(entry));
+  } catch (_) { /* Diagnostics must never affect intake, including logging failures. */ }
+}
+
 function fbReceive_(input) {
   const result = function (ok, code) { return fbResult_(input.requestId, ok, code); };
   let lock;
@@ -170,16 +227,47 @@ function fbReceive_(input) {
       return record.state === 'accepted' ? result(true, 'saved') : result(false, 'result_unknown');
     }
     if (count >= FB_RECEIPT_LIMIT) return result(false, 'busy');
+    const diagnose = function (stage, status, jsonOk, verification) {
+      try { fbSiteverifyDiagnostic_(props, stage, input.transport, status, jsonOk, verification); }
+      catch (_) { /* Also isolate an unexpected helper failure from intake. */ }
+    };
     let verification;
+    let response;
+    let status;
+    let body;
+    diagnose('started');
     try {
-      const response = UrlFetchApp.fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
+      response = UrlFetchApp.fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
         method: 'post', payload: {secret: config.secret, response: input.turnstileToken}, muteHttpExceptions: true
       });
-      if (response.getResponseCode() !== 200) return result(false, 'verification_failed');
-      verification = JSON.parse(response.getContentText());
-    } catch (_) { return result(false, 'verification_failed'); }
-    if (!verification || verification.success !== true || verification.action !== 'feedback' ||
-        !config.hostnames.includes(verification.hostname)) return result(false, 'verification_failed');
+      status = response.getResponseCode();
+      if (status !== 200) {
+        diagnose('http_failure', status);
+        return result(false, 'verification_failed');
+      }
+      body = response.getContentText();
+    } catch (_) {
+      diagnose('request_exception', status);
+      return result(false, 'verification_failed');
+    }
+    try { verification = JSON.parse(body); }
+    catch (_) {
+      diagnose('json_failure', status, false);
+      return result(false, 'verification_failed');
+    }
+    if (!verification || verification.success !== true) {
+      diagnose('cloudflare_rejected', status, true, verification);
+      return result(false, 'verification_failed');
+    }
+    if (verification.action !== 'feedback') {
+      diagnose('action_mismatch', status, true, verification);
+      return result(false, 'verification_failed');
+    }
+    if (!config.hostnames.includes(verification.hostname)) {
+      diagnose('hostname_mismatch', status, true, verification);
+      return result(false, 'verification_failed');
+    }
+    diagnose('verified', status, true, verification);
 
     const form = FormApp.openById(config.formId);
     const items = form.getItems();

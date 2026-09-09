@@ -6,6 +6,183 @@ const path = require('node:path');
 const {ROOT, GAS, SETUP, harness, input, event} = require('./feedback-harness.cjs');
 const client = require('../feedback-form.js');
 
+const diagOn = () => ({FEEDBACK_SITEVERIFY_DIAGNOSTICS_ENABLED: 'true',
+  FEEDBACK_SITEVERIFY_DIAGNOSTICS_UNTIL: new Date(Date.now() + 1800000).toISOString()});
+const diagnosticLogs = h => h.state.logs.filter(s => s.startsWith('{')).map(s => JSON.parse(s));
+const diagnosticWrites = h => h.state.diagnosticWrites.map(s => JSON.parse(s));
+test('fixed empty-request probe is time-limited, rejected, and has no service side effects', () => {
+  for (const properties of [{}, {...diagOn(), FEEDBACK_SITEVERIFY_DIAGNOSTICS_ENABLED: 'false'},
+    {...diagOn(), FEEDBACK_SITEVERIFY_DIAGNOSTICS_UNTIL: 'invalid'},
+    {...diagOn(), FEEDBACK_SITEVERIFY_DIAGNOSTICS_UNTIL: '2020-01-01T00:00:00Z'}, diagOn()]) {
+    const h = harness({properties});
+    const result = JSON.parse(h.context.doPost({postData: {contents: '{}', type: 'text/plain', length: 2}}).text);
+    assert.deepEqual(result, {type: 'hiro-feedback-result', requestId: '', ok: false, code: 'invalid_input'});
+    const enabled = properties.FEEDBACK_SITEVERIFY_DIAGNOSTICS_ENABLED === 'true' &&
+      Date.parse(properties.FEEDBACK_SITEVERIFY_DIAGNOSTICS_UNTIL) > Date.now();
+    assert.deepEqual(h.state.logs, enabled ? ['feedback_diagnostic_probe_v1'] : []);
+    assert.equal(h.state.verification, 0); assert.equal(h.state.opened.length, 0);
+    assert.equal(h.state.saved.length, 0); assert.equal(h.state.emails.length, 0);
+    assert.equal(h.state.created, 0); assert.equal(h.state.locks, 0);
+  }
+});
+test('probe cannot log arbitrary client strings or accept different requests', () => {
+  for (const e of [{postData: {contents: '{"probe":"synthetic-private"}', type: 'text/plain'}},
+    {queryString: 'probe', postData: {contents: '{}', type: 'text/plain'}},
+    {postData: {contents: '{}', type: 'application/x-www-form-urlencoded'}}]) {
+    const h = harness({properties: diagOn()});
+    assert.equal(JSON.parse(h.context.doPost(e).text).code, 'invalid_input');
+    assert.deepEqual(h.state.logs, []); assert.equal(h.state.verification, 0);
+  }
+});
+test('probe read, console, and helper failures leave rejection unchanged', () => {
+  for (const option of ['diagReadThrows', 'diagConsoleThrows', 'helperThrows']) {
+    const h = harness({properties: diagOn(), [option]: true});
+    if (option === 'helperThrows') h.context.fbSiteverifyDiagnostic_ = () => { throw new Error('synthetic-private'); };
+    assert.equal(JSON.parse(h.context.doPost({postData: {contents: '{}', type: 'application/json'}}).text).code, 'invalid_input');
+    assert.deepEqual(h.state.logs, []); assert.equal(h.state.verification, 0);
+    assert.equal(h.state.saved.length, 0); assert.equal(h.state.emails.length, 0);
+  }
+});
+for (const [name, properties] of [
+  ['absent', {}], ['false', {...diagOn(), FEEDBACK_SITEVERIFY_DIAGNOSTICS_ENABLED: 'false'}],
+  ['boolean', {...diagOn(), FEEDBACK_SITEVERIFY_DIAGNOSTICS_ENABLED: true}],
+  ['uppercase', {...diagOn(), FEEDBACK_SITEVERIFY_DIAGNOSTICS_ENABLED: 'TRUE'}],
+  ['missing deadline', {FEEDBACK_SITEVERIFY_DIAGNOSTICS_ENABLED: 'true'}],
+  ['expired', {...diagOn(), FEEDBACK_SITEVERIFY_DIAGNOSTICS_UNTIL: '2020-01-01T00:00:00Z'}],
+  ['invalid', {...diagOn(), FEEDBACK_SITEVERIFY_DIAGNOSTICS_UNTIL: 'invalid'}],
+  ['no timezone', {...diagOn(), FEEDBACK_SITEVERIFY_DIAGNOSTICS_UNTIL: '2099-01-01T00:00:00'}],
+  ['invalid calendar', {...diagOn(), FEEDBACK_SITEVERIFY_DIAGNOSTICS_UNTIL: '2099-02-30T00:00:00Z'}]
+]) test('diagnostics disabled: ' + name, () => {
+  const h = harness({properties}); assert.equal(h.post(input()).ok, true);
+  assert.deepEqual(diagnosticLogs(h), []); assert.deepEqual(diagnosticWrites(h), []);
+  assert.equal(h.values.FEEDBACK_SITEVERIFY_DIAGNOSTIC_LAST, undefined);
+  assert.equal(h.state.verification, 1);
+});
+const diagCases = [
+  ['request_exception', {verifyThrows: true}, null, null, null, null, null],
+  ['http_failure', {verifyStatus: 503}, 503, null, null, null, null],
+  ['json_failure', {badVerifyJson: true}, 200, false, null, null, null],
+  ['cloudflare_rejected', {verification: {success: false, 'error-codes': ['timeout-or-duplicate']}}, 200, true, false, null, null],
+  ['action_mismatch', {verification: {success: true, action: 'synthetic-private-action', hostname: 'hiroappworks.com'}}, 200, true, true, false, null],
+  ['hostname_mismatch', {verification: {success: true, action: 'feedback', hostname: 'synthetic-private-host'}}, 200, true, true, true, false],
+  ['verified', {}, 200, true, true, true, true]
+];
+for (const [stage, options, status, jsonOk, success, action, hostname] of diagCases) {
+  test('diagnostics stage and unchanged response: ' + stage, () => {
+    const data = input(); const off = harness(options), on = harness({...options, properties: diagOn()});
+    assert.deepEqual(on.post(data), off.post(data));
+    const logs = diagnosticLogs(on); assert.equal(logs.length, 2);
+    const writes = diagnosticWrites(on); assert.equal(writes.length, 2);
+    assert.deepEqual(logs.map(x => x.stage), ['started', stage]);
+    assert.deepEqual(writes.map(x => x.stage), ['started', stage]);
+    assert.deepEqual(writes[0], {marker: 'feedback_siteverify_diag_v2', stage: 'started', httpStatus: null,
+      success: null, errorCodes: [], unknownErrorCode: false, actionMatch: null, hostnameMatch: null,
+      transport: 'fetch', at: writes[0].at});
+    assert.match(writes[0].at, /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/);
+    assert.equal(writes[1].httpStatus, status); assert.equal(writes[1].success, success);
+    assert.equal(writes[1].actionMatch, action); assert.equal(writes[1].hostnameMatch, hostname);
+    assert.equal(writes[1].transport, 'fetch'); assert.match(writes[1].at, /^\d{4}-\d{2}-\d{2}T/);
+    assert.deepEqual(logs[0], {marker: 'feedback_siteverify_diag_v1', stage: 'started', transport: 'fetch',
+      http_status: null, json_ok: null, success_strict: null, action_matches: null, hostname_matches: null,
+      error_codes: [], unknown_error_code: false});
+    assert.equal(logs[1].http_status, status); assert.equal(logs[1].json_ok, jsonOk);
+    assert.equal(logs[1].success_strict, success); assert.equal(logs[1].action_matches, action);
+    assert.equal(logs[1].hostname_matches, hostname);
+    assert.equal(on.state.verification, 1); assert.equal(off.state.verification, 1);
+    assert.deepEqual(on.state.saved, off.state.saved);
+    // Separate VM realms have different Object prototypes; compare full mail contents.
+    assert.deepEqual(JSON.parse(JSON.stringify(on.state.emails)), JSON.parse(JSON.stringify(off.state.emails)));
+    if (stage !== 'verified') { assert.equal(on.state.saved.length, 0); assert.equal(on.state.emails.length, 0); }
+    assert.equal(JSON.stringify({logs, writes}).includes('synthetic-private-'), false);
+  });
+}
+test('diagnostics unknown codes and response metadata never leak', () => {
+  const allowed = ['missing-input-secret', 'invalid-input-secret', 'missing-input-response',
+    'invalid-input-response', 'bad-request', 'timeout-or-duplicate', 'internal-error'];
+  const data = input({message: 'synthetic-private-body', turnstileToken: 'synthetic-private-token'});
+  const h = harness({properties: diagOn(), verification: {success: false,
+    'error-codes': [...allowed, 'synthetic-private-code', {detail: 'synthetic-private-object'}],
+    secret: 'synthetic-private-secret', cdata: data.message, challenge_ts: 'synthetic-private-time',
+    hostname: 'synthetic-private-host', action: 'synthetic-private-action', requestId: data.requestId}});
+  h.post(data); const logs = diagnosticLogs(h); assert.deepEqual(logs[1].error_codes, allowed);
+  const property = diagnosticWrites(h)[1]; assert.deepEqual(property.errorCodes, allowed);
+  assert.equal(property.unknownErrorCode, true);
+  assert.equal(logs[1].unknown_error_code, true);
+  const serialized = JSON.stringify({logs, property});
+  for (const value of ['synthetic-private', data.requestId, 'mock-only-secret', 'local_mock_form', 'operator@example.test']) {
+    assert.equal(serialized.includes(value), false);
+  }
+  assert.deepEqual(Object.keys(logs[1]).sort(), ['marker', 'stage', 'transport', 'http_status', 'json_ok',
+    'success_strict', 'action_matches', 'hostname_matches', 'error_codes', 'unknown_error_code'].sort());
+  assert.deepEqual(Object.keys(property).sort(), ['marker', 'stage', 'httpStatus', 'success', 'errorCodes',
+    'unknownErrorCode', 'actionMatch', 'hostnameMatch', 'transport', 'at'].sort());
+});
+test('diagnostic property write failure never changes public result or service order', () => {
+  for (const outcome of [{}, {verifyThrows: true}, {verifyStatus: 503}, {badVerifyJson: true},
+    {verification: {success: false, 'error-codes': ['bad-request']}}, {saveFails: true}, {mailFails: true}]) {
+    const data = input();
+    const failed = harness({...outcome, properties: diagOn(), diagWriteThrows: true});
+    const baseline = harness(outcome);
+    assert.deepEqual(failed.post(data), baseline.post(data));
+    assert.equal(failed.state.verification, 1);
+    assert.deepEqual(failed.state.saved, baseline.state.saved);
+    assert.deepEqual(JSON.parse(JSON.stringify(failed.state.emails)), JSON.parse(JSON.stringify(baseline.state.emails)));
+    assert.deepEqual(diagnosticWrites(failed), []);
+  }
+});
+for (const option of ['diagReadThrows', 'diagConsoleThrows', 'helperThrows', 'formatThrows']) {
+  test('diagnostic failure isolated: ' + option, () => {
+    for (const outcome of [{}, {verifyThrows: true}, {saveFails: true}, {mailFails: true}]) {
+      const data = input(); const h = harness({...outcome, properties: diagOn(), [option]: true});
+      if (option === 'helperThrows') h.context.fbSiteverifyDiagnostic_ = () => { throw new Error('synthetic-private-helper'); };
+      if (option === 'formatThrows') {
+        const vm = require('node:vm');
+        vm.runInContext("const nativeStringify = JSON.stringify; JSON.stringify = function (x) { if (x && x.marker === 'feedback_siteverify_diag_v1') throw new Error('synthetic-private-format'); return nativeStringify(x); };", h.context);
+      }
+      assert.deepEqual(h.post(data), harness(outcome).post(data));
+      assert.equal(diagnosticLogs(h).length, 0); assert.equal(h.state.verification, 1);
+    }
+  });
+}
+test('diagnostics stop after expiry and explicit OFF without changing acceptance', () => {
+  const h = harness({properties: diagOn()}); h.post(input()); assert.equal(diagnosticLogs(h).length, 2);
+  h.values.FEEDBACK_SITEVERIFY_DIAGNOSTICS_UNTIL = '2020-01-01T00:00:00Z';
+  assert.equal(h.post(input()).ok, true); assert.equal(diagnosticLogs(h).length, 2);
+  Object.assign(h.values, diagOn()); h.values.FEEDBACK_SITEVERIFY_DIAGNOSTICS_ENABLED = 'false';
+  assert.equal(h.post(input()).ok, true); assert.equal(diagnosticLogs(h).length, 2);
+});
+test('expiry between started and result suppresses later diagnostic log', () => {
+  const h = harness({properties: diagOn()}); const fetch = h.context.UrlFetchApp.fetch;
+  h.context.UrlFetchApp.fetch = (...args) => {
+    h.values.FEEDBACK_SITEVERIFY_DIAGNOSTICS_UNTIL = '2020-01-01T00:00:00Z'; return fetch(...args);
+  };
+  assert.equal(h.post(input()).ok, true); assert.deepEqual(diagnosticLogs(h).map(x => x.stage), ['started']);
+});
+test('diagnostics accept explicit timezone offset', () => {
+  const h = harness({properties: {...diagOn(), FEEDBACK_SITEVERIFY_DIAGNOSTICS_UNTIL: '2099-01-01T09:00:00+09:00'}});
+  assert.equal(h.post(input()).ok, true); assert.equal(diagnosticLogs(h).length, 2);
+});
+test('diagnostic ON iframe and accepted retry preserve one save and one verification', async () => {
+  const h = harness({properties: diagOn()}); const data = input({message: '合成\nQA🙂'});
+  const result = await client.acknowledgedSend(data, async payload => {
+    h.post(payload); throw new Error('mock lost response');
+  }, async payload => h.iframe({...payload, message: payload.message.replace(/\n/g, '\r\n')}));
+  assert.equal(result.ok, true); assert.equal(h.state.saved.length, 1); assert.equal(h.state.emails.length, 1);
+  assert.equal(h.state.verification, 1); assert.equal(diagnosticLogs(h).length, 2);
+  const iframe = harness({properties: diagOn()}); assert.equal(iframe.iframe(input()).ok, true);
+  assert.deepEqual(diagnosticLogs(iframe).map(x => x.transport), ['iframe', 'iframe']);
+  assert.deepEqual(diagnosticWrites(iframe).map(x => x.transport), ['iframe', 'iframe']);
+});
+test('Siteverify input remains secret/response only; diagnostic values cannot enable via client', () => {
+  const h = harness({properties: diagOn()}); const fetch = h.context.UrlFetchApp.fetch;
+  h.context.UrlFetchApp.fetch = (url, config) => {
+    assert.deepEqual(Object.keys(config.payload).sort(), ['response', 'secret']); return fetch(url, config);
+  };
+  assert.equal(h.post(input()).ok, true);
+  const invalid = harness(); assert.equal(invalid.post(input({FEEDBACK_SITEVERIFY_DIAGNOSTICS_ENABLED: 'true'})).code, 'invalid_input');
+  assert.equal(invalid.state.verification, 0); assert.equal(diagnosticLogs(invalid).length, 0);
+});
+
 for (const [name, text, locale] of [
   ['Japanese', '便利です', 'ja'], ['English', 'Please simplify this', 'en'], ['one character', 'あ', 'ja'],
   ['newlines and emoji', '一行目\n二行目🙂！', 'ja'], ['boundary 5000', 'a'.repeat(5000), 'en'],
@@ -307,14 +484,22 @@ test('existing contact sources/settings unchanged', () => {
   };
   for (const [file, hash] of Object.entries(baseline)) assert.equal(crypto.createHash('sha256').update(fs.readFileSync(path.join(ROOT, file))).digest('hex'), hash);
 });
-test('production config empty; pages have only one user field and no analytics scripts', () => {
+test('temporary production config is public-only; pages are noindex with one user field', () => {
   const vm = require('node:vm'); const context = {window: {}};
-  vm.runInNewContext(fs.readFileSync(path.join(ROOT, 'feedback-config.js'), 'utf8'), context);
-  assert.equal(context.window.HIRO_FEEDBACK_CONFIG.endpoint, ''); assert.equal(context.window.HIRO_FEEDBACK_CONFIG.sitekey, '');
+  const source = fs.readFileSync(path.join(ROOT, 'feedback-config.js'), 'utf8');
+  vm.runInNewContext(source, context);
+  const config = context.window.HIRO_FEEDBACK_CONFIG;
+  assert.equal(config.endpoint, 'https://script.google.com/macros/s/AKfycbzmH5ClW89OEs3S1wFLLauDatNgWcTDyNw6D0kVeA6-cHg2d7QC_RlWRvxjFZG2i2XM/exec');
+  assert.equal(config.sitekey, '0x4AAAAAAErfKafAFfGY0xlG');
+  assert.equal(config.responseOrigin, 'https://n-66nehlqf7df57wdesgtz3dcitr5z3g4wpf34jhy-0lu-script.googleusercontent.com');
+  assert.deepEqual(Object.keys(config).sort(), ['endpoint', 'sitekey', 'responseOrigin'].sort());
+  assert.equal(/FEEDBACK_(?:TURNSTILE_SECRET|NOTIFICATION_EMAIL|FORM_ID|ITEM_ID)/.test(source), false);
   for (const file of ['consignment-note/feedback/index.html', 'en/consignment-note/feedback/index.html']) {
     const html = fs.readFileSync(path.join(ROOT, file), 'utf8');
     assert.equal((html.match(/<textarea\b/g) || []).length, 1);
     assert.equal(/<input(?![^>]*type="hidden")/.test(html), false);
     assert.equal(/beacon|posthog|google-analytics|site-config\.js|contact-form\.js|language\.js/.test(html), false);
+    assert.match(html, /<meta name="robots" content="noindex, nofollow">/);
+    assert.match(html, /feedback-testing/);
   }
 });

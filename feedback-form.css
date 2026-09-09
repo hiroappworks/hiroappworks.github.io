@@ -11,6 +11,7 @@
 .feedback-eyebrow { color: var(--cyan); font-size: 14px; font-weight: 700; letter-spacing: .06em; margin: 0 0 10px; }
 .feedback-intro h1 { font-size: clamp(30px, 5vw, 42px); margin: 0 0 24px; line-height: 1.3; }
 .feedback-intro p:not(.feedback-eyebrow) { color: var(--ink-soft); margin: 0 0 16px; }
+.feedback-intro .feedback-testing { padding: 14px 16px; border-left: 3px solid var(--cyan); background: #eef9fb; color: var(--ink); }
 .feedback-page a, .feedback-footer a { color: var(--cyan); text-underline-offset: 3px; }
 .feedback-card { margin-top: 30px; padding: 30px; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; box-shadow: 0 8px 28px rgb(7 27 58 / 4%); }
 .feedback-status { font-size: 14px; color: var(--ink-soft); margin: 0 0 20px; }

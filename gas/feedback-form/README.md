@@ -1,5 +1,31 @@
 # 返信不要のご意見・ご要望フォーム（owner-run setup）
 
+## Siteverifyの時限付き限定診断（2026-09-08追加）
+
+以下の古い「未反映」等の記述は各工程当時の履歴です。最新の実デプロイversion・設定・限定QA結果はrepository外の既存 `FEEDBACK_DEPLOYMENT_QA.md` を参照してください。今回の診断版は基準commitに対する未commit差分で、Web公開や受付全体の完成を意味しません。
+
+診断は既定OFF。既存専用GASへ整合版Code.gsだけを反映し、既存Webアプリを新versionへ更新します。Setup.gs、Secret、hostname/action、受付・保存・通知・重複防止、公開responseは変更しません。新endpointや公開debug入口は作りません。
+
+- `FEEDBACK_SITEVERIFY_DIAGNOSTICS_ENABLED` が厳密に文字列 `true`
+- `FEEDBACK_SITEVERIFY_DIAGNOSTICS_UNTIL` がtimezone付きの有効なISO日時（秒必須、Zまたは±HH:MM、例は固定期限として転記しない）
+- 現在時刻がUNTILより前
+
+この3条件が揃う場合だけ、private helper `fbSiteverifyDiagnostic_` が運営者用GAS実行ログへ出力し、同じ分類をScript Property `FEEDBACK_SITEVERIFY_DIAGNOSTIC_LAST`へbest effortで上書き保存します。設定欠落・不正値・期限切れ・読取り失敗はOFF。各診断直前に期限を確認し、要求ごとの自動延長はしません。診断設定・整形・console/helper・Property書込み例外は受付結果へ影響させず、生例外fallbackもありません。
+
+ログは固定marker `feedback_siteverify_diag_v1` と、Siteverify直前の `started`、結果の `request_exception / http_failure / json_failure / cloudflare_rejected / action_mismatch / hostname_mismatch / verified` の最大2件/試行です。外部通信は従来の1回だけ。許可フィールドはstage、transport、HTTP整数status、JSON解析成否、厳密なsuccess、action/hostname一致boolean、公式allowlistのerror_codes配列、未知コード存在booleanのみ。未評価はnull。実hostname/action、sitekey、Secret、token、本文、requestId、raw例外、response全文、メール/IP/Cookie、管理ID/URL、metadataを記録しません。
+
+Script Propertyは固定marker `feedback_siteverify_diag_v2`、stage、整数またはnullの`httpStatus`、確認済みbooleanまたはnullの`success`、allowlist済み`errorCodes`、`unknownErrorCode`、比較済みbooleanまたはnullの`actionMatch`/`hostnameMatch`、`fetch`/`iframe`だけの`transport`、UTC ISO 8601の`at`だけを保存します。Siteverify responseそのものは保存しません。運営者が分類結果を記録した後、診断を明示的にOFFにして、このPropertyだけを削除します。
+
+error-codesのallowlistは `missing-input-secret / invalid-input-secret / missing-input-response / invalid-input-response / bad-request / timeout-or-duplicate / internal-error`。未知値は原文を出さず存在booleanだけです。[Cloudflare公式Siteverify](https://developers.cloudflare.com/turnstile/get-started/server-side-validation/)（2026-09-08確認）。公式のraw例外ログ例は採用しません。
+
+運用手順：コード反映・読戻し・既存デプロイversion更新まではOFFを維持。通常Chromeの手動QA準備が整ってから、実測現在時刻の30分後をUNTILに設定し、ENABLED=trueと読戻し確認します。診断用2キーだけを更新し、既存Propertiesを一括置換しません。回答件数確認→新token取得後すぐユーザーが日本語1回送信→該当versionの実行ログ→回答→保存済みの場合だけ通知着信の順で確認。結果不明や通知未着でも再投稿しません。既存fetch/iframe fallbackは実行単位とtransportで区別します。追加Siteverify、idempotency_key追加、検証条件緩和、原因修正は行いません。
+
+終了・中断時はENABLED=falseへ戻して読戻し、Local Overridesも解除します。OFF操作不能ならUNTILの絶対時刻と未確認を記録し、無断延長しません。OFF/期限切れは新しいログの停止であり、Google側の過去実行ログを削除するものではありません。
+
+`request_exception` は外部呼出し/応答取得区間の例外であり、権限不足の断定ではありません。`timeout-or-duplicate` は期限切れと再利用を単独では区別できません。`verified` はSiteverifyと独自検証通過のみで、保存・通知着信は別確認です。
+
+ローカル確認：`node --test tests/feedback.test.cjs`。既存97件を維持し、期限/段階/漏洩防止/helper失敗隔離/ON-OFF応答一致/iframe再試行を追加します。Setup.gs+Code.gsは同じVMグローバルで読込みます。追加の実通信やフロント変更はなく、44ブラウザシナリオ・アプリテストの全再実行は対象外です。
+
 委託販売ノート専用の保存先を作る独立したApps Scriptです。既存 `gas/contact-form/`、既存フォーム、回答シート、公開デプロイは変更しません。このコードはWeb受付APIではありません。
 
 ## 実行方法
@@ -192,6 +218,12 @@ English draft:
 7. 上記GO後に、既存お問い合わせフォームの日英アプリ指定、アプリ設定の「ご意見・お問い合わせ」を別差分で実装。
 
 今回は公開、Google反映・投稿、実メール、トリガー、Cloudflare設定、App Store操作、アプリ改修、commit/pushを一切行っていません。
+
+### 固定ログ取得の事前確認
+
+診断用2キーの既存の時限条件が有効な場合だけ、同じdoPostへqueryなし・text/plainまたはapplication/jsonの厳密な空オブジェクト`{}`を送ると、固定文字列`feedback_diagnostic_probe_v1`を1件出力します。通常の入力検証ではinvalid_inputとなり、Siteverify・保存・通知は呼びません。任意文字列の記録や新しい公開関数は追加していません。設定読取り・ログの失敗も公開応答を変えません。
+
+公開Web実行の固定ログを所有者側で実際に取得できてから実投稿へ進みます。エディタ実行だけのログ確認と区別し、取得できなければ追加投稿・一時公開を停止します。確認後は診断フラグを明示的にfalseへ戻します。過去ログはOFFでは削除されません。
 
 ### 追加公式資料（2026-09-07確認）
 

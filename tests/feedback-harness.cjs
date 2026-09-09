@@ -14,14 +14,19 @@ function harness(options = {}) {
     FEEDBACK_ALLOWED_HOSTNAMES: 'hiroappworks.com', FEEDBACK_PARENT_ORIGIN: 'https://hiroappworks.com',
     ...options.properties
   };
-  const state = {saved: [], emails: [], verification: 0, locks: 0, logs: [], opened: [], held: false,
+  const state = {saved: [], emails: [], verification: 0, locks: 0, logs: [], diagnosticWrites: [], opened: [], held: false,
     created: 0, added: 0, titleWrites: 0};
   const item = {getId: () => options.wrongId ? 43 : 42, getType: () => options.wrongType ? 'TEXT' : 'PARAGRAPH_TEXT',
     asParagraphTextItem() { return this; }, isRequired: () => !options.optional,
     createResponse: message => ({message})};
-  const props = {getProperty: key => values[key] ?? null, getProperties: () => ({...values}),
+  const props = {getProperty: key => {
+    if (options.diagReadThrows && key.startsWith('FEEDBACK_SITEVERIFY_DIAGNOSTICS_')) throw new Error('synthetic-private-read');
+    return values[key] ?? null;
+  }, getProperties: () => ({...values}),
     setProperty(key, value) {
+      if (options.diagWriteThrows && key === 'FEEDBACK_SITEVERIFY_DIAGNOSTIC_LAST') throw new Error('synthetic-private-write');
       if (options.receiptWriteFails && value.includes('accepted')) throw new Error('private failure');
+      if (key === 'FEEDBACK_SITEVERIFY_DIAGNOSTIC_LAST') state.diagnosticWrites.push(value);
       values[key] = value;
     }, deleteProperty: key => { delete values[key]; }};
   const form = {getItems: () => options.twoItems ? [item, item] : [item], collectsEmail: () => Boolean(options.collectsEmail),
@@ -32,7 +37,12 @@ function harness(options = {}) {
       return {getId: () => 'mock-response'};
     }})};
   const output = text => ({text, setMimeType() { return this; }, setXFrameOptionsMode() { return this; }});
-  const context = vm.createContext({console: {warn: code => state.logs.push(code), log: () => {
+  const context = vm.createContext({console: {warn: code => state.logs.push(code), log: code => {
+    if (typeof code === 'string' && (code === 'feedback_diagnostic_probe_v1' ||
+        code.startsWith('{"marker":"feedback_siteverify_diag_v1"'))) {
+      if (options.diagConsoleThrows) throw new Error('synthetic-private-console');
+      state.logs.push(code); return;
+    }
     if (!options.management) throw new Error('Unexpected setup log');
     // Suppress mock setup metadata, as well as all response content.
   }},
@@ -49,7 +59,7 @@ function harness(options = {}) {
     UrlFetchApp: {fetch(url, config) {
       if (url !== 'https://challenges.cloudflare.com/turnstile/v0/siteverify' || config.payload.secret !== 'mock-only-secret') throw new Error('Unexpected outbound target');
       state.verification++;
-      if (options.verifyThrows) throw new Error('private secret');
+      if (options.verifyThrows) throw new Error('synthetic-private-exception');
       return {getResponseCode: () => options.verifyStatus || 200,
         getContentText: () => options.badVerifyJson ? 'invalid' : JSON.stringify(options.verification || {success: true, hostname: 'hiroappworks.com', action: 'feedback'})};
     }},
