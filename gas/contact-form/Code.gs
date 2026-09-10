@@ -106,8 +106,9 @@ function doPost(e) {
         result = {ok: true};
       } else {
         validateTurnstile_(payload.turnstileToken);
-        submitToGoogleForm_(payload);
+        var savedFormId = submitToGoogleForm_(payload);
         cache.put(cacheKey, "accepted", 600);
+        notifyContactOperator_(savedFormId);
         result = {ok: true};
       }
     } finally {
@@ -322,6 +323,32 @@ function submitToGoogleForm_(payload) {
   } catch (error) {
     throw publicError_("service_unavailable");
   }
+  return formId;
+}
+
+// Best effort only: notification failure must never reject a saved inquiry.
+function notifyContactOperator_(formId) {
+  try {
+    var recipient = PropertiesService.getScriptProperties().getProperty("CONTACT_NOTIFICATION_EMAIL");
+    if (typeof recipient !== "string" ||
+        !/^[^\s@<>,;]+@[^\s@<>,;]+\.[^\s@<>,;]+$/.test(recipient) ||
+        typeof formId !== "string" || !/^[A-Za-z0-9_-]+$/.test(formId)) {
+      contactNotificationWarning_("contact_notification_invalid_settings");
+      return;
+    }
+    MailApp.sendEmail({
+      to: recipient,
+      subject: "【Hiro App Works】新しいお問い合わせ",
+      body: "新しいお問い合わせが届きました。\nGoogleフォームの回答画面で内容と返信先をご確認ください。\n" +
+        "https://docs.google.com/forms/d/" + formId + "/edit#responses",
+    });
+  } catch (_) {
+    contactNotificationWarning_("contact_notification_failed");
+  }
+}
+
+function contactNotificationWarning_(code) {
+  try { console.warn(code); } catch (_) { /* Logging is also best effort. */ }
 }
 
 function resolveFormItems_(form) {

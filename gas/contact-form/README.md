@@ -1,5 +1,24 @@
 # お問い合わせフォーム送信設定
 
+## 運営者への新着通知
+
+Googleフォーム保存成功 → 既存acceptedキャッシュ登録 → MailAppによる通知試行 → 従来の成功応答、の順序です。
+Script Property `CONTACT_NOTIFICATION_EMAIL` に運営者の単一アドレス `contact@hiroappworks.com` を設定してください。
+空値、空白・改行、複数宛先等の不正値には送信しません。宛先を投稿者やクライアントから取得しません。
+件名は「【Hiro App Works】新しいお問い合わせ」、本文は固定案内と今回保存に使った既存フォームの回答管理リンクだけです。
+問い合わせ本文、返信先メール、端末情報等は複製せず、自動返信・CC/BCC・添付もありません。
+
+manifestは従来のForms・外部通信scopeに `https://www.googleapis.com/auth/script.send_mail` を追加します。
+公開版更新前に、このお問い合わせGASの所有者が対象scopeを承認していることを新しい実行で確認してください。
+別のGASでの承認は代用になりません。保存先の実設定を古いREADME例で上書きしないでください。
+
+通知設定・送信権限・quota・MailApp・ログの失敗は保存成功に影響させず、固定コードのみ記録します。
+通知失敗による回答削除、過去回答の一括再通知、自動retry、トリガー追加は行いません。
+既存600秒CacheService命中時は保存・通知を再実行しませんが、キャッシュ消失やプロセス停止をまたぐ永続的exactly-once保証ではありません。
+FormResponse.submit()でonFormSubmitが自動発火することには依存しません。
+
+ローカル検証: `node --test tests/contact-notification.test.cjs`（mockのみ、実投稿・実メールなし）。
+
 このディレクトリには、静的サイトの `/contact/` から送信された内容を、既存のGoogleフォームへ登録するGoogle Apps Scriptを置いています。Googleフォーム自体、既存の回答、質問項目、設定は変更しません。
 
 ## 既存フォームとの対応
