@@ -102,6 +102,16 @@
               <p class="form-required-note"><span aria-hidden="true">*</span> Required fields</p>
 
               <input type="hidden" name="appId" value="app_other" data-form-control>
+              <div class="form-field" data-hinted-app-field hidden>
+                <label for="app-id">App <span class="required-mark" aria-hidden="true">*</span></label>
+                <select id="app-id" class="form-control" disabled required aria-required="true" aria-invalid="false" aria-describedby="app-id-help app-id-error" data-form-control>
+                  <option value="">Select an app</option>
+                  <option value="app_consignment_note">Consignment Note</option>
+                  <option value="app_other">Other</option>
+                </select>
+                <p id="app-id-help" class="field-help">Check the app you are contacting us about. You can change it.</p>
+                <p id="app-id-error" class="field-error" data-error-for="appId" role="alert" hidden></p>
+              </div>
 
               <div class="form-field">
                 <label for="inquiry-type-id">Inquiry type <span class="required-mark" aria-hidden="true">*</span></label>

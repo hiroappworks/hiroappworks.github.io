@@ -478,7 +478,7 @@ test('iframe save uncertainty and notification failure retain existing semantics
 });
 test('existing contact sources/settings unchanged', () => {
   const baseline = {
-    'contact-form.js': '007eeb0175c376ab1c7255991b5f65989b7657f370a4e3d7f18286764e884af5',
+    'contact-form.js': 'bf76c37334e1dd7b00a72315da1009c00d9b2f0a23c493ccc416afebae0c104d',
     'site-config.js': '36380dd05bf11be016c2f169c48dd4887df1994caf5bd962aa3d63a53f0e4cc8',
     'gas/contact-form/Code.gs': '07bf7726f108b2cb4353e1c0f8693ab3f4129f8eb3e57d1ca41e14467eb3d88e'
   };
@@ -503,7 +503,7 @@ test('intake config is public-only; pages are noindex with one user field and no
     assert.doesNotMatch(html, /feedback-testing|Testing in progress|動作確認中/);
     const english = file.startsWith('en/');
     assert.match(html, english ? /We do not send individual replies/ : /個別の返信は行いません/);
-    assert.ok(html.includes('href="' + (english ? '/en/contact/' : '/contact/') + '"'));
+    assert.ok(html.includes('href="' + (english ? '/en/contact/' : '/contact/') + '?appId=app_consignment_note' + '"'));
     assert.match(html, english ? /This form is being prepared/ : /ただいま準備中です/);
     assert.match(html, /<button class="feedback-send" type="submit" disabled>/);
   }

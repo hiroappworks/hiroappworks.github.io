@@ -12,6 +12,35 @@
   var turnstileSiteKey = typeof contactConfig.turnstileSiteKey === "string" ? contactConfig.turnstileSiteKey.trim() : "";
   var isConfigured = Boolean(endpoint && turnstileSiteKey);
 
+  // URL values are only an initial hint; never copy arbitrary query data.
+  var appHints = new URLSearchParams(window.location.search).getAll("appId");
+  var hasAppHint = appHints.length === 1 && appHints[0] === "app_consignment_note";
+  var appControl = form.elements.namedItem("appId");
+  var hintedField = form.querySelector("[data-hinted-app-field]");
+  if (hasAppHint && hintedField) {
+    var hintedSelect = hintedField.querySelector("select");
+    appControl.disabled = true;
+    appControl.removeAttribute("name");
+    hintedSelect.name = "appId";
+    hintedSelect.disabled = false;
+    hintedField.hidden = false;
+    appControl = hintedSelect;
+  }
+  // Preserve a selection already restored by the browser. Do not reapply on pageshow.
+  if (hasAppHint && !appControl.value) {
+    appControl.value = "app_consignment_note";
+  }
+  function updateContactLanguageLinks() {
+    var suffix = appControl.value === "app_consignment_note" ? "?appId=app_consignment_note" : "";
+    document.querySelectorAll("[data-language-choice], .language-notice-link").forEach(function (link) {
+      var english = link.getAttribute("data-language-choice") === "en" || link.classList.contains("language-notice-link");
+      link.setAttribute("href", (english ? "/en/contact/" : "/contact/") + suffix);
+    });
+  }
+  appControl.addEventListener("change", updateContactLanguageLinks);
+  window.addEventListener("pageshow", updateContactLanguageLinks);
+  updateContactLanguageLinks();
+
   var controls = {
     appId: form.elements.namedItem("appId"),
     inquiryTypeId: form.elements.namedItem("inquiryTypeId"),

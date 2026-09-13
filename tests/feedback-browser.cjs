@@ -110,7 +110,7 @@ async function main() {
         assert.equal(await page.locator('input:not([type=hidden]),select').count(), 0);
         assert.equal(await page.locator('html').getAttribute('lang'), locale);
         assert.ok(await page.locator('h1').innerText());
-        assert.ok(await page.locator('a[href="' + (locale === 'en' ? '/en' : '') + '/contact/"]').count());
+        assert.ok(await page.locator('a[href="' + (locale === 'en' ? '/en' : '') + '/contact/?appId=app_consignment_note"]').count());
         assert.ok(await page.locator('a[href="' + (locale === 'en' ? '/en' : '') + '/privacy/"]').count());
         assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false);
         assert.equal(await page.locator('.feedback-intro > p:not(.feedback-eyebrow)').first().isVisible(), true);
