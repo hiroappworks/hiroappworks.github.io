@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Share feedback about Consignment Note. No name or email address is required. We do not send individual replies.">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="referrer" content="no-referrer">
+  <meta name="color-scheme" content="light">
+  <title>Feedback — Consignment Note | Hiro App Works</title>
+  <link rel="canonical" href="https://hiroappworks.com/en/consignment-note/feedback/">
+  <link rel="alternate" hreflang="ja" href="https://hiroappworks.com/consignment-note/feedback/">
+  <link rel="alternate" hreflang="en" href="https://hiroappworks.com/en/consignment-note/feedback/">
+  <link rel="icon" href="/favicon.ico">
+  <link rel="stylesheet" href="/utility-pages.css">
+  <link rel="stylesheet" href="/feedback-form.css">
+  <script defer src="/feedback-config.js"></script>
+  <script defer src="/feedback-form.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="feedback-header">
+    <a class="feedback-brand" href="/en/" aria-label="Hiro App Works home"><img src="/assets/brand/hiro-app-works-mark.svg" width="26" height="27" alt="">Hiro App Works</a>
+    <nav class="feedback-language" aria-label="Language"><a href="/consignment-note/feedback/" lang="ja">日本語</a><a href="/en/consignment-note/feedback/" lang="en" aria-current="page">English</a></nav>
+  </header>
+  <main id="main-content" class="feedback-page">
+    <div class="feedback-intro">
+      <p class="feedback-eyebrow">Consignment Note</p>
+      <h1>Feedback</h1>
+      <p>Tell us about anything that was difficult to use, anything that concerned you, or features you would find helpful.</p>
+      <p>No name or email address is required. We do not send individual replies.<br>If you need a reply, please use the <a href="/en/contact/">contact form</a>.</p>
+    </div>
+    <div class="feedback-card">
+      <p id="feedback-status" class="feedback-status" role="status" aria-live="polite">This form is being prepared. Sending is not available yet.</p>
+      <form id="feedback-form" novalidate>
+        <label for="feedback-message">Feedback <span class="feedback-required">Required</span></label>
+        <textarea id="feedback-message" name="message" rows="7" maxlength="5000" required placeholder="Even a short comment is welcome." aria-describedby="feedback-guidance feedback-limit feedback-error"></textarea>
+        <p id="feedback-limit" class="feedback-small">1–5,000 characters</p>
+        <p id="feedback-guidance" class="feedback-small">Please do not enter personal information, such as your name or contact details, or actual sales data.</p>
+        <p class="feedback-small">We use your feedback to help improve the app. Please see our <a href="/en/privacy/">Privacy Policy</a> for how we handle information.</p>
+        <input type="hidden" name="honeypot" value="">
+        <div id="feedback-security" aria-label="Security check"></div>
+        <button id="feedback-retry-security" class="feedback-security-retry" type="button" hidden>Restart security check</button>
+        <p id="feedback-error" class="feedback-error" role="alert" hidden></p>
+        <button class="feedback-send" type="submit" disabled>Send feedback</button>
+      </form>
+      <section id="feedback-success" class="feedback-success" tabindex="-1" aria-labelledby="feedback-success-title" hidden>
+        <h2 id="feedback-success-title">Thank you for your feedback.</h2>
+        <p>We will use it to help improve the app.<br>We do not send individual replies to this form.</p>
+        <p>If you need a reply, please use the <a href="/en/contact/">contact form</a>.</p>
+      </section>
+      <noscript><p>JavaScript is required to send feedback. If you need a reply, please use the <a href="/en/contact/">contact form</a>.</p></noscript>
+    </div>
+  </main>
+  <footer class="feedback-footer"><a href="/en/">Hiro App Works</a><a href="/en/privacy/">Privacy Policy</a></footer>
+</body>
+</html>
