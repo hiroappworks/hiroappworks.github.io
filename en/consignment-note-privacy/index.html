@@ -68,7 +68,7 @@
       <section class="page-hero privacy-hero" aria-labelledby="privacy-title">
         <div class="page-hero-inner">
           <h1 id="privacy-title"><span class="title-brand">Consignment Note</span> <span class="title-policy">Privacy Policy</span></h1>
-          <p class="page-hero-description policy-date"><span class="policy-date-line">Established: August 11, 2026</span><span class="policy-date-separator" aria-hidden="true">; </span><span class="policy-date-line">Last updated: August 28, 2026</span></p>
+          <p class="page-hero-description policy-date"><span class="policy-date-line">Established: August 11, 2026</span><span class="policy-date-separator" aria-hidden="true">; </span><span class="policy-date-line">Last updated: September 22, 2026</span></p>
         </div>
       </section>
 
@@ -117,7 +117,7 @@
           <section id="external-services" class="policy-section">
             <p class="section-number">03</p>
             <h2>Information sent to external services</h2>
-            <p>The App does not have a dedicated server or general cloud synchronization. However, when API keys are enabled in the distribution settings, the App uses the following external services. Information sent to external services is limited to the extent necessary to provide each service.</p>
+            <p>The App does not have a dedicated server or general cloud synchronization. Use of the following external services depends on the purposes, app versions, and distribution settings described below. Information sent to external services is limited to the extent necessary to provide each service.</p>
 
             <div class="service-card">
               <h3>RevenueCat</h3>
@@ -127,10 +127,16 @@
 
             <div class="service-card">
               <h3>PostHog</h3>
+              <h4>Version 1.1 and later</h4>
+              <p>Usage analytics collection is disabled. The App does not collect or send new usage analytics events to PostHog through this integration. This applies to usage analytics and is separate from purchase-related communications with RevenueCat and Apple, backup sharing selected by the user, and voluntary support inquiries.</p>
+              <h4>Versions before 1.1</h4>
+              <p>Earlier versions may send the limited information described below to PostHog to help understand app usage. The following descriptions of the SDK, events, and storage apply to versions before 1.1.</p>
               <p>We use the PostHog React Native SDK to aggregate how the App is used, help improve features, and review purchase flows. Information is sent only in builds where a PostHog API key is configured.</p>
               <p>The events that the App manually sends include product registration, sales location registration, recording remaining quantities, completion of settlements, reaching free-version limits, displaying the Paywall, and the start, completion, cancellation, and failure of purchases and restores. The properties sent are limited to recording method, reason for displaying the Paywall, purchase flow, restore result, and normalized error categories.</p>
               <p>The App does not pass product names, management numbers / product numbers, product photos or photo paths, sales location names, prices, inventory counts, sales, fees, settlement details, notes, CSV files, backups, SQLite contents, RevenueCat IDs, or raw error messages as event properties. The App also has no process for identifying users using their names or email addresses, or for using identify or alias.</p>
               <p>During initialization, the App disables automatic app-lifecycle collection, session replay, remote Feature Flags, Surveys, GeoIP, and Person Profiles, and uses in-memory storage. It does not use a PostHog Provider that enables automatic screen and touch collection. However, the handling of anonymous identifiers added by the SDK to communications and standard technical information about the app and device follows the <a href="https://posthog.com/docs/privacy" target="_blank" rel="noopener noreferrer">PostHog privacy information</a> and the specifications of the SDK in use.</p>
+              <h4>Updating and previously sent information</h4>
+              <p>Updating to version 1.1 does not itself delete information that may already have been sent to PostHog by an earlier version. The existing retention, deletion, and contact terms in this policy continue to apply to that information.</p>
             </div>
           </section>
 
@@ -145,7 +151,7 @@
             <p class="section-number">05</p>
             <h2>Analytics information</h2>
             <p>The “Analytics” screen in the App aggregates sales history saved on the user’s device and displays the results within the App. The business data itself shown on this screen, such as sales, number of items sold, sales rate, expected proceeds, and rankings, is not sent to PostHog.</p>
-            <p>As described in the preceding section, the App sends fixed events and limited categorical values to PostHog to aggregate whether features were used and the status of purchase flows. Even when PostHog is unavailable, product saving, inventory, sales, settlement, and purchase processing continue, and errors from the analytics SDK do not propagate to the App’s save processing.</p>
+            <p>Version 1.1 and later does not collect or send new usage analytics to PostHog. As described in the preceding section, versions before 1.1 send fixed events and limited categorical values to PostHog to aggregate whether features were used and the status of purchase flows. Even when PostHog is unavailable, product saving, inventory, sales, settlement, and purchase processing continue, and errors from the analytics SDK do not propagate to the App’s save processing.</p>
           </section>
 
           <section id="photos" class="policy-section">
@@ -174,7 +180,7 @@
             <p class="section-number">09</p>
             <h2>Provision to third parties</h2>
             <p>We have not built a feature into the App to provide users’ business data to third parties for advertising or sales purposes. The App also has no feature for collecting or selling account information as a list.</p>
-            <p>However, information necessary for their respective purposes is passed to RevenueCat for purchase management, PostHog for usage analytics, the App Store for payment and purchase processing, and destinations selected by the user through sharing. This is done within the scope described in “Information sent to external services,” and the terms and privacy policies of each service apply. Except where required by law or in similar cases, we do not independently provide information to third parties beyond the above.</p>
+            <p>However, information necessary for their respective purposes is passed to RevenueCat for purchase management, PostHog for usage analytics in versions before 1.1, the App Store for payment and purchase processing, and destinations selected by the user through sharing. This is done within the scope described in “Information sent to external services,” and the terms and privacy policies of each service apply. Except where required by law or in similar cases, we do not independently provide information to third parties beyond the above.</p>
           </section>
 
           <section id="management" class="policy-section">
@@ -204,7 +210,7 @@
           <section id="date" class="policy-section policy-section-last">
             <p class="section-number">13</p>
             <h2>Establishment and last update</h2>
-            <p class="policy-section-date"><span class="policy-section-date-line">Established: August 11, 2026</span><span class="policy-section-date-separator" aria-hidden="true">; </span><span class="policy-section-date-line">Last updated: August 28, 2026</span></p>
+            <p class="policy-section-date"><span class="policy-section-date-line">Established: August 11, 2026</span><span class="policy-section-date-separator" aria-hidden="true">; </span><span class="policy-section-date-line">Last updated: September 22, 2026</span></p>
           </section>
         </article>
       </div>

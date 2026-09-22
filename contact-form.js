@@ -30,7 +30,11 @@
   if (hasAppHint && !appControl.value) {
     appControl.value = "app_consignment_note";
   }
+  var quickHelp = document.querySelector("[data-consignment-quick-help]");
   function updateContactLanguageLinks() {
+    if (quickHelp) {
+      quickHelp.hidden = appControl.value !== "app_consignment_note";
+    }
     var suffix = appControl.value === "app_consignment_note" ? "?appId=app_consignment_note" : "";
     document.querySelectorAll("[data-language-choice], .language-notice-link").forEach(function (link) {
       var english = link.getAttribute("data-language-choice") === "en" || link.classList.contains("language-notice-link");

@@ -55,7 +55,7 @@
         <div class="page-hero-inner">
           <h1 id="privacy-title"><span class="title-brand">委託販売ノート</span></h1>
           <p id="privacy-subtitle" class="title-policy privacy-title-subtitle">プライバシーポリシー</p>
-          <p class="page-hero-description policy-date"><span class="policy-date-line">制定日：2026年8月11日</span><span class="policy-date-separator" aria-hidden="true">・</span><span class="policy-date-line">最終更新日：2026年8月28日</span></p>
+          <p class="page-hero-description policy-date"><span class="policy-date-line">制定日：2026年8月11日</span><span class="policy-date-separator" aria-hidden="true">・</span><span class="policy-date-line">最終更新日：2026年9月22日</span></p>
         </div>
       </section>
 
@@ -104,7 +104,7 @@
           <section id="external-services" class="policy-section">
             <p class="section-number">03</p>
             <h2>外部サービスへの情報送信</h2>
-            <p>本アプリには、専用サーバーや一般的なクラウド同期機能はありません。一方、配布時の設定でAPIキーが有効になっている場合、次の外部サービスを利用します。外部サービスへ送信される情報は、各サービスの提供に必要な範囲に限られます。</p>
+            <p>本アプリには、専用サーバーや一般的なクラウド同期機能はありません。外部サービスの利用は、以下に記載する目的、アプリのバージョン、および配布時の設定によって異なります。外部サービスへ送信される情報は、各サービスの提供に必要な範囲に限られます。</p>
 
             <div class="service-card">
               <h3>RevenueCat</h3>
@@ -114,10 +114,16 @@
 
             <div class="service-card">
               <h3>PostHog</h3>
+              <h4>バージョン1.1以降</h4>
+              <p>利用状況分析の収集機能を無効にしています。本アプリは、PostHogを利用した新たな利用状況イベントの収集・送信を行いません。これは利用状況分析についての説明であり、RevenueCatやAppleによる購入関連通信、利用者が選択するバックアップ共有、任意のお問い合わせ送信とは別の取扱いです。</p>
+              <h4>バージョン1.1より前</h4>
+              <p>以前のバージョンでは、アプリの利用状況を把握するため、以下の限定的な情報がPostHogへ送信される場合があります。以下のSDK・イベント・保存方式の説明は、バージョン1.1より前に適用されます。</p>
               <p>本アプリの利用状況を集計し、機能改善や購入導線の確認に役立てるため、PostHogのReact Native SDKを利用しています。PostHogのAPIキーが設定されたビルドでのみ送信されます。</p>
               <p>本アプリが手動で送信するイベントは、商品登録、販売場所登録、残数記録、精算完了、無料版上限到達、Paywall表示、購入・復元の開始・完了・キャンセル・失敗などです。送信するプロパティは、記録方法、Paywallの表示理由、購入導線、復元結果、正規化したエラー分類などに限定しています。</p>
               <p>商品名、管理番号／品番、商品写真または写真のパス、販売場所名、価格、在庫数、売上、手数料、精算内容、メモ、CSV、バックアップ、SQLiteの内容、RevenueCatのID、エラーの生メッセージは、アプリのイベントプロパティへ渡していません。アプリから氏名やメールアドレスを使った識別、identify、aliasを行う処理もありません。</p>
               <p>アプリ側の初期化では、アプリのライフサイクル自動収集、セッションリプレイ、リモートFeature Flags、Surveys、GeoIP、Person Profileを無効にし、保存方式をメモリにしています。画面・タッチの自動収集を有効にするPostHog Providerは使用していません。ただし、SDKが通信に付加する匿名識別子やアプリ・端末の標準的な技術情報の扱いは、<a href="https://posthog.com/docs/privacy" target="_blank" rel="noopener noreferrer">PostHogのプライバシー情報</a>および利用中のSDK仕様にも従います。</p>
+              <h4>アップデートと過去の情報</h4>
+              <p>バージョン1.1への更新それ自体は、以前のバージョンから既にPostHogへ送信された情報を自動削除する処理ではありません。過去の情報についても、本ポリシーの既存の保存期間・削除方法・お問い合わせに関する条件が引き続き適用されます。</p>
             </div>
           </section>
 
@@ -132,7 +138,7 @@
             <p class="section-number">05</p>
             <h2>分析情報</h2>
             <p>本アプリ内の「分析」画面は、利用者の端末に保存された販売履歴を本アプリ内で集計して表示する機能です。この画面の売上、販売点数、販売率、受取見込、ランキングなどの業務データ自体をPostHogへ送信することはありません。</p>
-            <p>PostHogへ送信するのは、前項のとおり、機能が使われたことや購入導線の状態を集計するための固定イベントと限定的な区分値です。PostHogの利用が利用できない場合でも、商品の保存、在庫・販売・精算、課金処理は継続し、分析SDKのエラーを本アプリの保存処理へ伝播させません。</p>
+            <p>バージョン1.1以降ではPostHogによる新たな利用状況分析の収集・送信を行いません。バージョン1.1より前でPostHogへ送信するのは、前項のとおり、機能が使われたことや購入導線の状態を集計するための固定イベントと限定的な区分値です。PostHogの利用が利用できない場合でも、商品の保存、在庫・販売・精算、課金処理は継続し、分析SDKのエラーを本アプリの保存処理へ伝播させません。</p>
           </section>
 
           <section id="photos" class="policy-section">
@@ -161,7 +167,7 @@
             <p class="section-number">09</p>
             <h2>第三者提供</h2>
             <p>当方は、広告配信や販売目的で利用者の業務データを第三者へ提供する機能を本アプリへ組み込んでいません。アカウント情報を名簿として収集・販売する機能もありません。</p>
-            <p>ただし、課金管理のためのRevenueCat、利用状況分析のためのPostHog、App Storeの決済・購入処理、および利用者が共有操作で選択した保存先には、それぞれの目的に必要な情報が渡ります。これらは「外部サービスへの情報送信」に記載した範囲で行われ、各サービスの規約・プライバシーポリシーが適用されます。法令に基づく場合などを除き、上記以外の独自の第三者提供は行いません。</p>
+            <p>ただし、課金管理のためのRevenueCat、バージョン1.1より前における利用状況分析のためのPostHog、App Storeの決済・購入処理、および利用者が共有操作で選択した保存先には、それぞれの目的に必要な情報が渡ります。これらは「外部サービスへの情報送信」に記載した範囲で行われ、各サービスの規約・プライバシーポリシーが適用されます。法令に基づく場合などを除き、上記以外の独自の第三者提供は行いません。</p>
           </section>
 
           <section id="management" class="policy-section">
@@ -191,7 +197,7 @@
           <section id="date" class="policy-section policy-section-last">
             <p class="section-number">13</p>
             <h2>制定日・最終更新日</h2>
-            <p class="policy-section-date"><span class="policy-section-date-line">制定日：2026年8月11日</span><span class="policy-section-date-separator" aria-hidden="true">・</span><span class="policy-section-date-line">最終更新日：2026年8月28日</span></p>
+            <p class="policy-section-date"><span class="policy-section-date-line">制定日：2026年8月11日</span><span class="policy-section-date-separator" aria-hidden="true">・</span><span class="policy-section-date-line">最終更新日：2026年9月22日</span></p>
           </section>
         </article>
       </div>
