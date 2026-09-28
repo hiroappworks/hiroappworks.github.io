@@ -477,8 +477,10 @@ test('iframe save uncertainty and notification failure retain existing semantics
   assert.equal(mail.state.saved.length, 1); assert.deepEqual(mail.state.logs, ['feedback_notification_failed']);
 });
 test('existing contact sources/settings unchanged', () => {
+  // contact-form.js gained the approved Quick Help visibility handling in
+  // 16ae7b060e696aefef982e0ef136c7a6a6554d5b (2026-09-22).
   const baseline = {
-    'contact-form.js': 'bf76c37334e1dd7b00a72315da1009c00d9b2f0a23c493ccc416afebae0c104d',
+    'contact-form.js': '4686a6f3e02009ad2177a9c95a6b0864d014fc2a438eee6d8ca3b50e109027e0',
     'site-config.js': '36380dd05bf11be016c2f169c48dd4887df1994caf5bd962aa3d63a53f0e4cc8',
     'gas/contact-form/Code.gs': '07bf7726f108b2cb4353e1c0f8693ab3f4129f8eb3e57d1ca41e14467eb3d88e'
   };

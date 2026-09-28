@@ -4,7 +4,9 @@
   var LANGUAGE_STORAGE_KEY = "hiroAppWorksLanguage";
   var NOTICE_STORAGE_KEY = "hiroAppWorksEnglishNoticeDismissed";
   var routes = {
+    "/consignment-note": {ja: "/consignment-note/", en: "/en/consignment-note/"},
     "/en/consignment-note": {ja: "/consignment-note/", en: "/en/consignment-note/"},
+    "/support": {ja: "/support/", en: "/en/support/"},
     "/en/support": {ja: "/support/", en: "/en/support/"},
     "/playorder/privacy": {ja: "/playorder/privacy/", en: "/en/playorder/privacy/"},
     "/en/playorder/privacy": {ja: "/playorder/privacy/", en: "/en/playorder/privacy/"},
