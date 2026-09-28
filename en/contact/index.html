@@ -59,6 +59,7 @@
         </div>
         <nav class="site-nav" aria-label="Primary navigation">
           <a href="/en/">Home</a>
+          <a href="/en/support/">Support</a>
           <a href="/en/privacy/">Privacy</a>
           <a href="/en/contact/" aria-current="page">Contact</a>
         </nav>
@@ -88,14 +89,15 @@
 
             <p class="contact-copy-mail">If you cannot use the form, you can also contact us by <a href="mailto:contact@hiroappworks.com">email</a>.</p>
             <section class="contact-copy-note" data-consignment-quick-help hidden aria-labelledby="consignment-quick-help-title">
-              <h2 id="consignment-quick-help-title">Consignment Note Quick Help</h2>
+              <h2 id="consignment-quick-help-title">Consignment Sales Tracker Quick Help</h2>
+              <p><a href="/en/support/#faq">All frequently asked questions</a></p>
               <h3>Restore a purchase</h3>
               <p>Use the same Apple Account you used to purchase. In Settings, select “Upgrade to Pro”, then “Restore purchases”. If Pro is already active, you do not need to restore it again.</p>
               <h3>Create and restore a backup</h3>
               <p>In Settings, select “Create backup”, then use the iOS share sheet to save the file to Files or another destination. To restore a saved backup, including on a new device, select “Restore from backup” in Settings and choose the file. Review the confirmation before replacing the app’s current data and photos.</p>
               <h3>Where your data is stored</h3>
               <p>Your main business data is stored on your device. The app does not provide automatic cloud sync. You can use manual backups to save and transfer your data.</p>
-              <p><a href="/en/consignment-note/privacy/">Consignment Note Privacy Policy</a></p>
+              <p><a href="/en/consignment-note/privacy/">Consignment Sales Tracker Privacy Policy</a></p>
             </section>
           </aside>
 
@@ -111,15 +113,14 @@
             <form class="contact-form" data-contact-form data-success-url="/en/contact/thanks/" action="" method="post" novalidate>
               <p class="form-required-note"><span aria-hidden="true">*</span> Required fields</p>
 
-              <input type="hidden" name="appId" value="app_other" data-form-control>
-              <div class="form-field" data-hinted-app-field hidden>
+              <div class="form-field">
                 <label for="app-id">App <span class="required-mark" aria-hidden="true">*</span></label>
-                <select id="app-id" class="form-control" disabled required aria-required="true" aria-invalid="false" aria-describedby="app-id-help app-id-error" data-form-control>
+                <select id="app-id" name="appId" class="form-control" required aria-required="true" aria-invalid="false" aria-describedby="app-id-help app-id-error" data-form-control>
                   <option value="">Select an app</option>
-                  <option value="app_consignment_note">Consignment Note</option>
+                  <option value="app_consignment_note">Consignment Sales Tracker</option>
                   <option value="app_other">Other</option>
                 </select>
-                <p id="app-id-help" class="field-help">Check the app you are contacting us about. You can change it.</p>
+                <p id="app-id-help" class="field-help">Choose the app your question is about.</p>
                 <p id="app-id-error" class="field-error" data-error-for="appId" role="alert" hidden></p>
               </div>
 
@@ -127,9 +128,9 @@
                 <label for="inquiry-type-id">Inquiry type <span class="required-mark" aria-hidden="true">*</span></label>
                 <select id="inquiry-type-id" name="inquiryTypeId" class="form-control" required aria-required="true" aria-invalid="false" aria-describedby="inquiry-type-help inquiry-type-error" data-form-control>
                   <option value="">Select an inquiry type</option>
-                  <option value="usage">How to use</option>
+                  <option value="usage">Using the app</option>
                   <option value="bug">Bug report</option>
-                  <option value="purchase_restore">Purchase / restore</option>
+                  <option value="purchase_restore">Purchases and restores</option>
                   <option value="feature_request">Feature request</option>
                   <option value="other">Other</option>
                 </select>
@@ -147,7 +148,7 @@
               <div class="form-field">
                 <label for="email">Reply email address <span class="required-mark" aria-hidden="true">*</span></label>
                 <input id="email" name="email" class="form-control" type="email" inputmode="email" autocomplete="email" maxlength="254" required aria-required="true" aria-invalid="false" aria-describedby="email-help email-error" data-form-control>
-                <p id="email-help" class="field-help">Used as the contact address if a reply is needed.</p>
+                <p id="email-help" class="field-help">We’ll use this address to reply to your inquiry.</p>
                 <p id="email-error" class="field-error" data-error-for="email" role="alert" hidden></p>
               </div>
 
@@ -166,9 +167,9 @@
               </div>
 
               <div class="turnstile-panel">
-                <p class="turnstile-label">Verification before sending</p>
+                <p class="turnstile-label">Security check</p>
                 <div class="turnstile-widget" data-turnstile-widget aria-describedby="turnstile-status"></div>
-                <p id="turnstile-status" class="field-help" data-turnstile-status aria-live="polite">Preparing submission settings.</p>
+                <p id="turnstile-status" class="field-help" data-turnstile-status aria-live="polite">Preparing the security check.</p>
               </div>
 
               <input type="hidden" name="locale" value="en" data-locale-input>
@@ -209,6 +210,7 @@
         </div>
         <nav class="footer-nav" aria-label="Footer navigation">
           <a href="/en/">Home</a>
+          <a href="/en/support/">Support</a>
           <a href="/en/privacy/">Privacy Policy</a>
           <a href="/en/contact/" aria-current="page">Contact</a>
         </nav>

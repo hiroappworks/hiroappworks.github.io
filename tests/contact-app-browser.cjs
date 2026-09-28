@@ -56,8 +56,8 @@ async function main() {
       const oneField = async () => assert.equal(await page.locator('[data-contact-form]').evaluate(f=>new FormData(f).getAll('appId').length),1);
       for (const query of invalid) {
         await page.goto(origin+base+query);
-        assert.equal(await activeValue(),lang==='en'?'app_other':'');
-        assert.equal(await page.locator('#app-id').isVisible(),lang==='ja');
+        assert.equal(await activeValue(),'');
+        assert.equal(await page.locator('#app-id').isVisible(),true);
         await oneField();
         assert.equal(await page.locator('[data-language-choice="en"]').getAttribute('href'),'/en/contact/');
         checks++;
@@ -125,7 +125,7 @@ async function main() {
       }
       await submit('?appId='+APP,null,APP);
       await submit('?appId='+APP,'app_other','app_other');
-      await submit('',lang==='ja'?'app_other':null,'app_other');
+      await submit('','app_other','app_other');
       assert.equal(posts.length,3);
       assert.deepEqual(errors,[]); assert.deepEqual(unexpected,[]); assert.deepEqual(localFailures,[]);
       console.log(lang+'-'+width+': normal/invalid, hint, '+(suite === 'functionality' ? 'selectOption/layout (not keyboard)' : 'keyboard/layout')+', language, restored state, 3 mock submissions passed; runtime/unexpected external/local failures 0');
