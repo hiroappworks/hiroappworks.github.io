@@ -38,6 +38,13 @@
       ? config.apps.consignmentNote.appStoreUrl
       : "";
     var url = typeof value === "string" ? value.trim() : "";
+    var campaignSources = new URLSearchParams(window.location.search).getAll("src");
+
+    if (window.location.pathname === "/consignment-note/"
+      && campaignSources.length === 1
+      && campaignSources[0] === "instagram_jp_paid_202610") {
+      url = "https://apps.apple.com/app/apple-store/id6800209010?pt=129293983&ct=instagram_jp_paid_202610&mt=8";
+    }
 
     if (links.length === 0 || !/^https:\/\/apps\.apple\.com\//i.test(url)) {
       return;
