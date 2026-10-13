@@ -95,21 +95,23 @@
         </nav>
 
         <article class="policy-article consignment-policy-article">
+          <!-- REVIEW ONLY: remove this note and update both last-updated dates on authorized publication. -->
+          <aside class="policy-note"><p>Unpublished revision for review. The version 1.1.3 and later provisions apply when offered in that version. New usage log collection remains disabled in versions 1.1–1.1.2.</p></aside>
           <section id="intro" class="policy-section">
             <p class="section-number">01</p>
             <h2>Introduction</h2>
-            <p>Hiro App Works (hereinafter “we”) provides the iOS app “Consignment Sales Tracker” (hereinafter “the App”). This policy explains how user information is handled in the App based on its current implementation.</p>
+            <p>Hiro App Works (hereinafter “we”) provides the iOS app “Consignment Sales Tracker” (hereinafter “the App”). This policy explains how user information is handled in the App.</p>
             <p>The App is used to manage consignment-sale products, inventory, sales, and settlements on an iPhone. Account registration and login are not required, and the App has no screens for entering a name, address, telephone number, email address, or similar information in order to use it. However, users may voluntarily enter text such as product names, notes, and sales location names.</p>
           </section>
 
           <section id="local-data" class="policy-section">
             <p class="section-number">02</p>
             <h2>Information handled in the app</h2>
-            <p>Business data entered or created in the App is stored, in principle, in the App’s database (SQLite) and storage. The main contents are as follows.</p>
+            <p>Business data entered or created in the App is stored, in principle, on your device. The main contents are as follows.</p>
             <ul>
               <li><strong>Product information:</strong> Product name, optional management number / product number, sale price, initial at-home inventory, notes, registration date and time, discontinued status, and information about where product photos are stored</li>
               <li><strong>Sales location information:</strong> Sales location name, fee method, rate, and amount, notes, and location-use end status</li>
-              <li><strong>Inventory and sales history:</strong> Details of deliveries, items brought home, sales, inventory adjustments, and cancellations; quantities, record dates, snapshots of prices at the time of sale, and notes</li>
+              <li><strong>Inventory and sales history:</strong> Details of deliveries, items brought home, sales, inventory adjustments, and cancellations; quantities, record dates, prices at the time of sale, and notes</li>
               <li><strong>Settlement information:</strong> Applicable period, sales, fees, transfer fees, expected deposit amount, actual deposit amount, difference, settlement status, and itemized details by product</li>
               <li><strong>Settings and operation history:</strong> Settings for automatic suggestions and recording methods, and operation history relating to products, sales locations, and settlements</li>
             </ul>
@@ -119,27 +121,36 @@
           <section id="external-services" class="policy-section">
             <p class="section-number">03</p>
             <h2>Information sent to external services</h2>
-            <p>The App does not have a dedicated server or general cloud synchronization. Use of the following external services depends on the purposes, app versions, and distribution settings described below. Information sent to external services is limited to the extent necessary to provide each service.</p>
-
+            <p>The App communicates with external services to check purchases, understand app usage, and collect optional survey responses. It does not store your business records on our own servers or provide general cloud syncing.</p>
             <div class="service-card">
-              <h3>RevenueCat</h3>
-              <p>We use the RevenueCat SDK to check and manage in-app purchase status and Pro entitlements. The App communicates with RevenueCat and Apple’s payment infrastructure to retrieve purchase information, process purchases, restore purchases, and check entitlements.</p>
-              <p>The App is not implemented to send its own account ID, name, email address, product names, inventory, sales location names, photos, CSV files, backups, or SQLite contents to RevenueCat. Because the App does not specify a RevenueCat App User ID, the RevenueCat SDK generates and uses an anonymous App User ID. For transaction information handled by the SDK in connection with purchases and restores, and technical information about the app and device, please also see the <a href="https://www.revenuecat.com/privacy/" target="_blank" rel="noopener noreferrer">RevenueCat Privacy Policy</a>.</p>
+              <h3>Purchase management (RevenueCat)</h3>
+              <p>We use a purchase management service and Apple’s payment system to handle Pro purchases, restore purchases, and check access to Pro. They process purchase information, service-generated identifiers, and technical information about the app and device.</p>
+              <p>The App does not send product names, stock records, sales location names, photos, or the contents of CSV files and backups to this service. It also does not provide its own account ID, your name, or your email address. For details, see the <a href="https://www.revenuecat.com/privacy/" target="_blank" rel="noopener noreferrer">purchase management service’s privacy policy</a>.</p>
             </div>
-
             <div class="service-card">
-              <h3>PostHog</h3>
-              <h4>Version 1.1 and later</h4>
-              <p>Usage analytics collection is disabled. The App does not collect or send new usage analytics events to PostHog through this integration. This applies to usage analytics and is separate from purchase-related communications with RevenueCat and Apple, backup sharing selected by the user, and voluntary support inquiries.</p>
+              <h3>App usage and optional surveys (version 1.1.3 and later)</h3>
+              <p>We use a third-party app analytics service to help make the App easier to use. We review app launches and feature usage to improve the experience and decide what to develop next.</p>
+              <p>This includes use of product and sales location registration, deliveries, remaining quantities, sales records, stock adjustments, settlements, the guide, photo changes, CSV files, backups, Pro offers, and purchase or restore actions. We also send the time of the action and limited category and technical information, such as the app’s display language and app and operating system versions.</p>
+              <p>We do not send product names, item codes, sales location names, quantities, prices, sales amounts, fees, settlement amounts, photos, file names or storage paths, notes, or internal business record IDs. Customer IDs from the purchase management service, purchase transaction IDs, and raw error messages are not sent for app usage analytics either.</p>
+              <p>To understand continued use of the same installation, we store an identifier on your device and send it with usage information. It is not based on your name or email address. It links usage history within the same installation and remains through ordinary restarts and updates, including when sharing is turned OFF and back ON.</p>
+              <h4>Turning usage sharing off</h4>
+              <p>Sharing is enabled by default. You can turn “Share Usage Data” OFF at the bottom of Settings at any time. This choice stays in place after restarts and updates and stops new usage logs from being sent. Turning it off does not change normal features or your access to Pro. Turning it back on does not resend old unsent logs from before or during the time sharing was off.</p>
+              <h4>Optional surveys</h4>
+              <p>We may offer multiple-choice surveys to help improve the App. Taking part is optional, and choosing not to answer does not limit any features. When you press Submit, we send your selected answers, display language, and information that identifies the survey and response to the analytics service. Surveys do not collect free-text answers or photos. The App also communicates with the service to check which surveys are available.</p>
+              <p>Responses use a separate identifier and are not directly linked to the identifier used for ongoing usage logs. You can choose to send a survey response even when usage sharing is OFF. Answered or skipped status and response acceptance information are saved on your device. The App does not display or offer copying of identifiers or receipt numbers.</p>
+              <p>If a delivery result cannot be confirmed, the App blocks resending to prevent duplicates. You can end that response without resending it. This does not confirm delivery or delete an answer at the receiving service. You cannot answer the same survey again after ending it, but other surveys remain available.</p>
+              <p>We do not record your screen, automatically collect taps, or track you across other companies’ apps and websites for advertising. For the receiving service’s information, see the <a href="https://posthog.com/privacy" target="_blank" rel="noopener noreferrer">analytics service’s privacy policy</a>.</p>
+            </div>
+            <details class="service-card">
+              <summary>Earlier app versions</summary>
+              <h4>Versions 1.1–1.1.2</h4>
+              <p>New usage log collection and transmission are disabled. Purchase communications, file sharing you choose, and voluntary support inquiries are handled separately.</p>
               <h4>Versions before 1.1</h4>
-              <p>Earlier versions may send the limited information described below to PostHog to help understand app usage. The following descriptions of the SDK, events, and storage apply to versions before 1.1.</p>
-              <p>We use the PostHog React Native SDK to aggregate how the App is used, help improve features, and review purchase flows. Information is sent only in builds where a PostHog API key is configured.</p>
-              <p>The events that the App manually sends include product registration, sales location registration, recording remaining quantities, completion of settlements, reaching free-version limits, displaying the Paywall, and the start, completion, cancellation, and failure of purchases and restores. The properties sent are limited to recording method, reason for displaying the Paywall, purchase flow, restore result, and normalized error categories.</p>
-              <p>The App does not pass product names, management numbers / product numbers, product photos or photo paths, sales location names, prices, inventory counts, sales, fees, settlement details, notes, CSV files, backups, SQLite contents, RevenueCat IDs, or raw error messages as event properties. The App also has no process for identifying users using their names or email addresses, or for using identify or alias.</p>
-              <p>During initialization, the App disables automatic app-lifecycle collection, session replay, remote Feature Flags, Surveys, GeoIP, and Person Profiles, and uses in-memory storage. It does not use a PostHog Provider that enables automatic screen and touch collection. However, the handling of anonymous identifiers added by the SDK to communications and standard technical information about the app and device follows the <a href="https://posthog.com/docs/privacy" target="_blank" rel="noopener noreferrer">PostHog privacy information</a> and the specifications of the SDK in use.</p>
-              <h4>Updating and previously sent information</h4>
-              <p>Updating to version 1.1 does not itself delete information that may already have been sent to PostHog by an earlier version. The existing retention, deletion, and contact terms in this policy continue to apply to that information.</p>
-            </div>
+              <p>Earlier builds with analytics configured could send PostHog limited information about product and sales location registration, remaining quantities, settlements, free-version limits, Pro offers, and purchase or restore actions. Properties were limited to recording methods, offer reasons, purchase entry points, restore results, and fixed error categories. Business record contents and purchase management IDs were not sent.</p>
+              <p>Those versions disabled automatic screen and tap collection, screen recording, location enrichment, person profiles, and remote surveys in the App, and held analytics information in memory. Communications could include identifiers and technical information about the app and device added by the service.</p>
+              <h4>Updates and earlier information</h4>
+              <p>Updating to version 1.1 or turning sharing OFF does not automatically delete information sent earlier. The retention, deletion, and contact provisions continue to apply to that information.</p>
+            </details>
           </section>
 
           <section id="iap" class="policy-section">
@@ -152,45 +163,51 @@
           <section id="analytics" class="policy-section">
             <p class="section-number">05</p>
             <h2>Analytics information</h2>
-            <p>The “Analytics” screen in the App aggregates sales history saved on the user’s device and displays the results within the App. The business data itself shown on this screen, such as sales, number of items sold, sales rate, expected proceeds, and rankings, is not sent to PostHog.</p>
-            <p>Version 1.1 and later do not collect or send new usage analytics to PostHog. As described in the preceding section, versions before 1.1 send fixed events and limited categorical values to PostHog to aggregate whether features were used and the status of purchase flows. Even when PostHog is unavailable, product saving, inventory, sales, settlement, and purchase processing continue, and errors from the analytics SDK do not propagate to the App’s save processing.</p>
+            <p>The App’s Analytics screen summarizes sales records stored on your device. It does not send the underlying sales amounts, quantities, sales rates, expected payments, rankings, or other business records to the third-party app analytics service.</p>
+            <p>Product registration, stock, sales, settlements, and purchases remain available when usage sharing is OFF or the analytics service cannot be reached.</p>
           </section>
 
           <section id="photos" class="policy-section">
             <p class="section-number">06</p>
             <h2>Product photos</h2>
-            <p>To register a product photo, users select one from the photo library or take a photo with the camera. The selected or captured image is converted to JPEG in the App, saved in the App’s Documents area with the long side limited to a maximum of 1,200 pixels and with a configured compression quality, and only information about its storage location within the App is recorded in SQLite, not the image itself.</p>
-            <p>The App is not implemented to send product photos to RevenueCat or PostHog, or to upload them to our servers. When a photo is deleted from the App, the photo file managed by the App is also deleted. However, copies of photos that users have saved elsewhere through backup or sharing may remain at those destinations.</p>
+            <p>You can add product photos from your photo library or camera. The App resizes and compresses them and stores them on your device.</p>
+            <p>Photos are not sent to purchase management or app analytics services or to our servers. Deleting a photo in the App also deletes the photo file it manages. Copies saved elsewhere through backup or sharing may remain at those destinations.</p>
           </section>
 
           <section id="csv" class="policy-section">
             <p class="section-number">07</p>
             <h2>CSV files</h2>
-            <p>For bulk product registration, the App reads a CSV file selected by the user in the iOS file picker. It supports UTF-8, including files with a BOM, and does not read files larger than 10 MiB. The CSV contents are parsed and checked within the App. If the user confirms registration, product information and initial at-home inventory are saved to SQLite. The App does not upload the CSV to an external server dedicated to CSV files or save it in a CSV-specific table.</p>
-            <p>The App deletes the temporary Cache copy created when the file is selected after the reading process is complete. When exporting a CSV template, the App opens the iOS share sheet and passes the file to the destination selected by the user. The handling of destinations selected by the user, such as Files and iCloud Drive, follows the settings and policies of those services.</p>
+            <p>For bulk product registration, the App reads a CSV file you choose on your device. Product information and initial at-home stock are saved only after you review the contents and confirm registration. The App does not upload CSV contents to an external server.</p>
+            <p>UTF-8 files are supported, and files larger than 10 MiB are not read. Temporary copies made for import are removed after processing. Exporting a template opens the iOS share sheet and sends the file to the destination you choose. Destinations such as Files or iCloud Drive apply their own settings and policies.</p>
           </section>
 
           <section id="backup" class="policy-section">
             <p class="section-number">08</p>
             <h2>Backup and restore</h2>
-            <p>Backups in the App are not automatic; they are a manual feature that the user explicitly runs from the settings screen. A backup contains a JSON file combining the SQLite data covered by the feature, including products, sales locations, inventory history, sales history, settlements, settings, and operation history, with product photos in JPEG Base64 format.</p>
-            <p>The created JSON file is temporarily placed in the App’s Cache and then passed through the iOS share sheet to a destination selected by the user. The App does not automatically upload it to our servers, iCloud, or any other cloud service. If the user selects Files, iCloud Drive, email, or another sharing destination, the file is passed to that service at that time.</p>
-            <p>During restore, the App validates the JSON file selected by the user and, after explicit confirmation, replaces the existing data and photos in the App. Purchase status and Product Analytics status are not included in backups. Because backups saved at a sharing destination are not subject to deletion by the App, users should delete them from the destination themselves when they are no longer needed.</p>
+            <p>Backups are manual: you create them from Settings. A backup combines products, sales locations, stock and sales history, settlements, settings, operation history, and product photos in one file.</p>
+            <p>The file is temporarily placed in the App, then passed to a destination you choose through the iOS share sheet. It is not automatically uploaded to our servers or iCloud. If you choose Files, iCloud Drive, email, or another service, the file is sent there.</p>
+            <p>When restoring, the App checks the backup you selected and replaces existing data and photos only after your confirmation. Purchase status and app analytics status are not included in backups. Exported backups are not deleted by the App, so remove them from their destination when you no longer need them.</p>
           </section>
 
           <section id="third-parties" class="policy-section">
             <p class="section-number">09</p>
             <h2>Provision to third parties</h2>
-            <p>We have not built a feature into the App to provide users’ business data to third parties for advertising or sales purposes. The App also has no feature for collecting or selling account information as a list.</p>
-            <p>However, information necessary for their respective purposes is passed to RevenueCat for purchase management, PostHog for usage analytics in versions before 1.1, the App Store for payment and purchase processing, and destinations selected by the user through sharing. This is done within the scope described in “Information sent to external services,” and the terms and privacy policies of each service apply. Except where required by law or in similar cases, we do not independently provide information to third parties beyond the above.</p>
+            <p>The App has no feature that provides your business records to third parties for advertising or sale. Usage information and responses are not used for third-party advertising tracking.</p>
+            <p>External services receive information needed for the purchase management, analytics, optional surveys, and App Store payments described above. Files also go to destinations you choose when sharing. Apart from service providers needed to operate these services and disclosures required by law, we do not independently share information for other purposes.</p>
           </section>
 
           <section id="management" class="policy-section">
             <p class="section-number">10</p>
             <h2>Data management</h2>
-            <p>The App’s business data is stored on the device, and there is no mechanism for us to directly view it during ordinary use of the App. The App has no account-based cloud synchronization or feature for automatically requesting that we delete data.</p>
-            <p>Products, sales locations, and transactions with history are not physically deleted through ordinary operations in order to maintain the consistency of that history; instead, they are managed using statuses such as discontinued, no longer in use, or cancelled. Product photos can be deleted from the product-editing screen. When the App is deleted from a device, data in the App’s storage is handled according to iOS app deletion, but backups and CSV files that users have exported to Files or elsewhere must be deleted separately.</p>
-            <p>The retention period and deletion methods for information handled by RevenueCat and PostHog follow the policies of those services. For questions about external services or this policy, please contact us at the address below.</p>
+            <p>Your product, stock, sales, and settlement records stay on your device. We have no way to view them directly during normal use of the App. There is no account-based cloud syncing or automatic request to have us delete data.</p>
+            <p>To keep records consistent, products, sales locations, and transactions with history are normally kept with an ended or cancelled status rather than deleted. You can delete product photos from the editing screen. When you delete the App, local data is handled by iOS. CSV files and backups you exported must be deleted separately from wherever you saved them.</p>
+            <h3>Retention of analytics and responses</h3>
+            <p>Usage logs and survey responses from version 1.1.3 and later are sent to and stored in the analytics service’s U.S. cloud environment. The current standard period for searching and analyzing these records is seven years. This period does not establish when every copy, including communications and security records and backups, is erased.</p>
+            <p>Our production environment is configured to discard source IP addresses from stored analytics events. Location enrichment is also disabled. This setting does not remove all handling of connection information needed for communications and security.</p>
+            <p>In production, the analytics service’s external AI features and the setting allowing data to be used for internal AI training are disabled. Service providers may process information as needed to operate the service. Retention and deletion of purchase-related information also follow the purchase management service’s and Apple’s policies.</p>
+            <h3>Questions and deletion requests</h3>
+            <p>Please use the contact details below for questions or requests to delete information already sent. Usage logs use an identifier that is not based on your name or email address, so we may be unable to identify the relevant records from your inquiry alone. We respond based on the information we can verify and applicable law.</p>
+            <p>Turning sharing OFF or deleting the App does not automatically delete information already sent. We cannot promise that every anonymous record can be individually identified and deleted.</p>
           </section>
 
           <section id="changes" class="policy-section">
