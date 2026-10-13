@@ -71,14 +71,49 @@ Editorial review covered first-time users, makers managing consignment sales, pr
 - Four HTML files: balanced element structure, unique/preserved anchors, existing local asset/navigation/fragment destinations, unchanged dates and Japanese/English legacy-copy article parity PASS.
 - Existing Web regression suite: 18 tests PASS; no app unit suite rerun because application source is unchanged.
 - In-app browser local preview: Japanese and English at actual **1280×720**, nonblank page, readable sections, table-of-contents navigation, legacy disclosure expansion and language switching both ways; no captured error/warning console entries. No horizontal document overflow observed.
-- **iPhone-width visual QA remains unverified**: supported viewport requests for 390×844 returned without an error but actual DOM and screenshot stayed 1280×720. No mobile PASS claim; do not substitute a cropped desktop screenshot for a mobile layout. Existing responsive CSS was not changed. Hiro can verify both unpublished local HTML pages at phone width, or a later supported responsive-browser session can complete this check before publication.
+- **Initial iPhone-width visual QA was unverified** (resolved by the final pass below): supported viewport requests for 390×844 returned without an error but actual DOM and screenshot stayed 1280×720. No mobile PASS claim; do not substitute a cropped desktop screenshot for a mobile layout. Existing responsive CSS was not changed. Hiro can verify both unpublished local HTML pages at phone width, or a later supported responsive-browser session can complete this check before publication.
 - Local preview served the original page with its existing website analytics beacon omitted only in the preview response, to avoid recording QA traffic. The committed script is unchanged.
 - `git diff --check` PASS; no new credentials, app tokens, internal IDs or user records in this patch. Existing public contact and site-beacon configuration remain untouched.
 
 ## Publication gates and next owner decisions
 
 1. Review Japanese/English copy and decide the provider naming approach after the applicability check. Current naming result C is a publication HOLD, not an asserted exemption.
-2. Complete phone-width visual QA. Preserve contact, language switching, anchors and SEO; no unrelated pages should change.
+2. Phone-width browser QA is complete in the final pass below. Preserve contact, language switching, anchors and SEO on publication; no unrelated pages should change.
 3. Verify recipient contracts / deletion and service-log scope where needed; seven years describes the query window, not universal erasure.
 4. Keep the existing Apple default-ON consent issue visible in developer release records. The owner's adopted behavior is unchanged and not presented as Apple-approved.
 5. Only with separate publication authorization: remove the review notice, set actual update dates, resolve any necessary independent provider disclosure, and merge to the configured Pages branch. No publication or merge is performed in this task.
+
+
+## Final wording and mobile display pass — 2026-10-13
+
+Owner accepted the existing candidate and requested one sentence removal only:
+
+- Japanese: removed 「識別子や受付番号を画面に表示・コピーする機能はありません。」
+- English: removed “The App does not display or offer copying of identifiers or receipt numbers.”
+
+The rest of the general-user copy is unchanged. This is removal of an unnecessary UI implementation explanation, not removal of the disclosures of persistent installation identity, linked usage history, separate survey response identity or device-local response/skip/acceptance state. No ID UI was added and no app code changed. Both legacy URL copies match their canonical articles.
+
+### Actual mobile-sized browser verification
+
+The Codex in-app browser viewport override now applied correctly. No Playwright browser installation or dependency was added. The installed Playwright package had no installed browser engines, so it was not used; the in-app browser itself completed the responsive checks.
+
+| Language | Requested and observed viewport | Screenshot pixel dimensions | Document scroll width | Horizontal overflow / clipped article blocks |
+|---|---|---|---|---|
+| Japanese | 375 × 812 | 375 × 812 | 375 | None |
+| English | 375 × 812 | 375 × 812 | 375 | None |
+| Japanese | 390 × 844 | 390 × 844 | 390 | None |
+| English | 390 × 844 | 390 × 844 | 390 | None |
+| Japanese | 430 × 932 | 430 × 932 | 430 | None |
+| English | 430 × 932 | 430 × 932 | 430 | None |
+
+Viewport width was read from the rendered document; screenshot width/height were independently decoded from the screenshot bytes. These are genuine responsive viewports, not desktop crops. Representative title, contents and survey-body screenshots were visually inspected and shown in the QA session. Japanese and English text wraps within the cards with readable spacing; sampled article paragraph size is 15.2px at all three widths. No unexpected background, padding, title or link overflow was observed.
+
+The contents anchor navigation, history disclosure expansion and Japanese-to-English language selection were exercised at each width; English-to-Japanese return was also verified. Contact anchor navigation and the visible mail link (`mailto:contact@hiroappworks.com`) were checked in representative Japanese/English conditions. No email was opened or sent. No captured warning/error console entries. This is browser-responsive QA, not owner physical-iPhone acceptance.
+
+HTML structure, local links/fragments, preserved unique anchors, existing dates, and alias article parity PASS. Existing Web regression tests **18/18 PASS** in this pass; diff check PASS. No application unit suite rerun and no CI PASS inferred. Metadata, design/CSS, language script, inquiry destination, publication dates and unrelated pages are unchanged.
+
+### Final review status
+
+Wording and mobile browser display are ready for Hiro's final review; do not continue optional polishing. Provider-name applicability remains **C** with the independent conditional disclosure retained above. Historical PostHog mention and provider privacy link are protected. No legal re-audit or new exemption conclusion was made. Existing owner default-ON choice and unresolved Apple consent issue are unchanged.
+
+Public main, public website, app Draft PR #29, PostHog and ASC are not modified by this final pass. Before separately authorized publication: owner approves the wording and resolves any necessary provider-name disclosure; remove the review-only notice and update both dates to the actual publication date. This pass does not authorize merge or publication.
