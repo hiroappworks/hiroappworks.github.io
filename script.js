@@ -59,6 +59,21 @@
     });
   }
 
+  // Separate from the Japanese config-driven links: never use that default on the English LP.
+  function setEnglishCampaignLinks() {
+    if (window.location.pathname !== "/en/consignment-note/") {
+      return;
+    }
+    var sources = new URLSearchParams(window.location.search).getAll("src");
+    var url = "https://apps.apple.com/us/app/id6800209010";
+    if (sources.length === 1 && sources[0] === "ig_us_v115_p01") {
+      url += "?pt=129293983&ct=ig_us_v115_p01&mt=8";
+    }
+    document.querySelectorAll("[data-en-consignment-store-link]").forEach(function (link) {
+      link.href = url;
+    });
+  }
+
   function activateStep(index) {
     var nextIndex = clamp(index, 0, steps.length - 1);
 
@@ -295,6 +310,7 @@
 
   root.classList.add("has-js");
   setAppStoreLink();
+  setEnglishCampaignLinks();
   observeSteps();
   observeHomeReveals();
   activateStep(0);
