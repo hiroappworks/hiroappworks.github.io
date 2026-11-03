@@ -1,0 +1,49 @@
+/* Scoped reading sections; preserve the existing hero, story and shared styles. */
+.product-content { padding: clamp(56px, 8vw, 112px) 0; background: var(--paper); }
+.product-content-inner { width: min(calc(100% - 2 * var(--page-gutter)), 1040px); margin-inline: auto; }
+.product-content h2 { margin: 0 0 24px; font-size: clamp(1.5rem, 3.2vw, 2.35rem); letter-spacing: -0.035em; line-height: 1.55; }
+.product-content h3 { margin: 28px 0 12px; font-size: 1.1rem; line-height: 1.7; }
+.product-content p, .product-content li { color: var(--ink-soft); line-height: 1.95; overflow-wrap: anywhere; }
+.product-content p { margin: 0 0 18px; }
+.product-content li + li { margin-top: 10px; }
+.product-content ul, .product-content ol { padding-left: 1.5em; }
+.product-content strong { color: var(--ink); }
+.product-content a { color: var(--cyan); text-decoration: underline; text-underline-offset: 4px; overflow-wrap: anywhere; }
+.product-content section[id] { scroll-margin-top: 12px; padding-top: 32px; margin-top: 32px; border-top: 1px solid var(--line); }
+.product-content-nav { display: flex; flex-wrap: wrap; gap: 8px 24px; margin: 20px 0; }
+.product-content-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 48px; }
+.product-content-note { margin: 24px 0; padding: 20px 24px 4px; border-left: 3px solid var(--cyan); background: var(--warm-gray); }
+.product-content .product-content-lead { font-size: 1.1rem; }
+.product-content .guide-meta { color: var(--ink-faint); font-size: .9rem; }
+.product-content .guide-title { max-width: 900px; font-size: clamp(1.8rem, 4.2vw, 3rem); line-height: 1.6; letter-spacing: -.035em; }
+.product-content .guide-nav { padding: 20px 24px; background: var(--warm-gray); }
+.product-content .guide-nav li + li { margin-top: 4px; }
+@media (max-width: 700px) { .product-content-grid { grid-template-columns: 1fr; gap: 0; } }
+.product-content-nav a, .guide-nav a { display: inline-block; padding-block: 6px; }
+main.product-content { padding-top: calc(var(--header-height) + 24px); }
+.product-content .guide-title .jp-keep { display: inline-block; }
+
+/* Only Scene 04: keep each result phrase intact. */
+.story-step[data-story-step="2"] .scene04-result > span { display: block; white-space: nowrap; }
+@media (max-width: 760px) { .story-step[data-story-step="2"] .scene04-result { font-size: clamp(2rem, 8.5vw, 3rem); } }
+.plan-comparison { width: 100%; max-width: 780px; table-layout: fixed; border-collapse: collapse; margin-bottom: 20px; font-size: clamp(.82rem, 1.5vw, 1rem); }
+.plan-comparison th, .plan-comparison td { padding: 14px 10px; border-bottom: 1px solid var(--line); line-height: 1.7; overflow-wrap: anywhere; }
+.plan-comparison th { text-align: left; }
+.plan-comparison thead { background: var(--warm-gray); }
+.plan-comparison th:first-child { width: 40%; }
+.plan-comparison thead th:not(:first-child) { width: 30%; text-align: center; }
+.plan-comparison td { text-align: center; color: var(--ink-soft); }
+.plan-comparison th:last-child, .plan-comparison td:last-child { background: rgba(0, 120, 138, .05); }
+@media (max-width: 480px) { .plan-comparison th, .plan-comparison td { padding: 12px 6px; } }
+
+.plan-comparison .plan-term { display: inline-block; white-space: nowrap; }
+
+/* Plan comparison emphasis only; common feature values stay equal. */
+.plan-comparison thead th:last-child { color: var(--cyan); font-weight: 800; }
+.plan-comparison th:last-child, .plan-comparison td:last-child { border-left: 2px solid rgba(0, 120, 138, .28); }
+.plan-comparison .pro-upgrade { color: var(--cyan); font-weight: 750; }
+
+@media (max-width: 480px) {
+  .plan-comparison th:first-child { width: 46%; }
+  .plan-comparison thead th:not(:first-child) { width: 27%; }
+}
