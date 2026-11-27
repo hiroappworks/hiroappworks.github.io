@@ -67,6 +67,10 @@ python3 -m http.server 4173 --bind 127.0.0.1
 
 ブランドトップのアプリ行は `index.html` の `data-app="consignment-note"` を持つ `article.app-row` です。2作目以降はこの単位で行を追加し、各アプリの素材を `assets/apps/<app-name>/` に分離します。委託販売ノートの詳細ページは `consignment-note/index.html` です。
 
+日英の紹介ページを追加する場合は、各言語の公開URLを自己参照canonicalにし、両ページに同じ日英の
+`hreflang` ペアを設定します。サイトマップと内部リンクには各言語の正規URLを使います。
+既存の別URLを表示用に残す場合は、同じ言語の正規URLをcanonicalに指定し、サイトマップには載せません。
+
 ## 素材
 
 委託販売ノートのアプリアイコンと画面画像は、SalesLocationLedger内の正式なネイティブアイコンおよびApp Store最終候補から、元ファイルを変更せずWebP派生画像としてコピーしています。出典と変換内容は `assets/apps/consignment-note/README.md` に記録しています。
